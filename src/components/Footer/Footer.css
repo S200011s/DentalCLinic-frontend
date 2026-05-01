@@ -1,0 +1,54 @@
+._FooterContainer {
+    background-color: var(--color-headline);
+}
+
+._LinksFooter li>a {
+    letter-spacing: 1px;
+    color: var(--color-light-Gray);
+    position: relative;
+    z-index: 1;
+    font-size: 0.9rem;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+._TextColor {
+    color: var(--color-light-Gray);
+    font-weight: 100;
+    font-size: 1rem;
+}
+
+._LinksFooter li:not(:last-of-type) {
+    margin-right: 30px;
+}
+
+._LinksFooter li>a::before {
+    position: absolute;
+    content: "";
+    width: calc(100% - 1px);
+    height: 1px;
+    background: var(--color-Buttons);
+    top: 1.5rem;
+    bottom: 0px;
+    left: 0;
+    transform: scale(0, 1);
+    transform-origin: right center;
+    transition: transform 0.5s ease;
+    z-index: -1;
+}
+
+
+._LinksFooter li>a:hover::before,
+._LinksFooter li>a.active::before {
+    transform: scale(1, 1);
+    transform-origin: left center;
+}
+
+._LinksFooter li>a:hover,
+._LinksFooter li>a.active {
+    color: var(--color-Buttons);
+}
+
+li>a::before {
+    background: var(--color-black);
+}

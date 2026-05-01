@@ -1,0 +1,33 @@
+._MenuContainer {
+    width: 15rem;
+    background: #ffffffe8;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border-radius: 1rem;
+    -webkit-border-radius: 1rem;
+    -moz-border-radius: 1rem;
+    -ms-border-radius: 1rem;
+    -o-border-radius: 1rem;
+    padding: 1rem 0.5rem;
+    z-index: 1000;
+    margin-top: 3rem;
+}
+
+._MenuProfile ._MenuProfileLink {
+    width: 90%;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--color-black);
+    line-height: 1.4rem;
+}
+
+._MenuProfile ._MenuProfileLink a {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+}
+
+._MenuProfile ._MenuProfileLink:hover {
+    color: var(--color-Buttons);
+}

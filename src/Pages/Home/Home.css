@@ -1,0 +1,1169 @@
+._HeroContainer {
+    position: relative;
+    width: 100%;
+    height: 140vh;
+    background-image: url(../../assets/images/3.webp);
+    background-repeat: no-repeat;
+    background-position: bottom center;
+    background-size: cover;
+    overflow: hidden;
+}
+
+._HeroContainer .container-fluid {
+    width: 100%;
+    height: 100%;
+}
+
+._HeroContainer .container-fluid ._TextHero {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 1rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    padding: 0px 3.5rem;
+
+}
+
+/* -------------------------------------------------------------------------- */
+._HeroContainer .container-fluid ._TextHero ._TextContainer {
+    width: 70%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 1rem;
+}
+
+._HeroContainer .container-fluid ._TextHero ._ImageHero {
+    width: 35%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+._HeroContainer .container-fluid ._TextHero ._ImageHero img {
+    width: 100%;
+}
+
+._HeroContainer .container-fluid ._TextHero ._WellcomeText,
+._MainText,
+._BtnShop {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+
+._HeroContainer .container-fluid ._TextHero ._WellcomeText p {
+    width: 100%;
+    text-align: left;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: var(--color-Buttons);
+}
+
+._HeroContainer .container-fluid ._TextHero ._MainText h2 {
+    width: 100%;
+    text-align: left;
+    font-size: 10rem;
+    font-weight: 500;
+    color: var(--color-headline);
+    letter-spacing: -5px;
+    line-height: 10rem;
+}
+
+._HeroContainer .container-fluid ._TextHero ._MainText h2 span {
+    color: var(--color-Buttons);
+}
+
+._HeroContainer .container-fluid ._TextHero ._DiscHero p {
+    width: 50%;
+    text-align: left;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--color-light-Gray);
+    line-height: 2rem;
+    margin: 0 auto;
+}
+
+._HeroContainer .container-fluid ._TextHero ._BtnShop {
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+._HeroContainer .container-fluid ._TextHero ._BtnShop ._Btn {
+    width: 30%;
+}
+
+._BtnStatus {
+    width: 40%;
+}
+
+._HeroContainer .container-fluid ._TextHero ._BtnShop ._Clients {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+._HeroContainer .container-fluid ._TextHero ._BtnShop ._Clients ._Status {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+._HeroContainer .container-fluid ._TextHero ._BtnShop ._Clients ._Status span {
+    text-align: left;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--color-light-Gray);
+    line-height: 1.3rem;
+}
+
+._HeroContainer .container-fluid ._TextHero ._BtnShop ._Clients ._Images {
+    display: flex;
+}
+
+._HeroContainer .container-fluid ._TextHero ._BtnShop ._Clients ._Images img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    margin-left: -5px;
+}
+
+/* ------------------------------- section two ------------------------------ */
+
+._LifeShoping {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 6rem 4rem;
+}
+
+._LifeShoping .container-fluid {
+    height: auto;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+}
+
+._LifeShoping .container-fluid ._OneCard {
+    width: calc(23% - 1rem);
+    min-width: 180px;
+    height: 18rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+._LifeShoping .container-fluid ._OneCard ._Image {
+    width: 100%;
+    height: 35%;
+    display: flex;
+    align-items: center;
+}
+
+._LifeShoping .container-fluid ._OneCard ._Image ._ImageContainer {
+    position: relative;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+}
+
+._LifeShoping .container-fluid ._OneCard ._Image img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+}
+
+._LifeShoping .container-fluid ._OneCard ._TextCard {
+    width: 100%;
+    height: 65%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+._LifeShoping .container-fluid ._OneCard ._TextCard ._Title {
+    width: 100%;
+    height: 25%;
+    text-align: left;
+    display: flex;
+    align-items: center;
+}
+
+._LifeShoping .container-fluid ._OneCard ._TextCard ._hover-btn {
+    width: 100%;
+    height: 25%;
+    text-align: left;
+    display: flex;
+    align-items: center;
+}
+
+._LifeShoping .container-fluid ._OneCard ._TextCard ._hover-btn .hover-btn {
+    position: relative;
+    max-width: 40px;
+    height: 40px;
+    padding: 0.8rem;
+    color: var(--color-Buttons);
+    font-size: 16px;
+    border: 1px solid var(--color-Buttons);
+    border-radius: 2rem;
+    cursor: pointer;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: max-width 0.4s ease, padding 0.4s ease, border-radius 0.3s ease;
+    white-space: nowrap;
+    -webkit-border-radius: 2rem;
+    -moz-border-radius: 2rem;
+    -ms-border-radius: 2rem;
+    -o-border-radius: 2rem;
+    outline: none;
+    font: 1rem;
+    font-weight: 600;
+}
+
+._LifeShoping .container-fluid ._OneCard ._TextCard ._hover-btn .hover-btn:hover {
+    max-width: 160px;
+    padding: 0.8rem 1.5rem;
+    border-radius: 2rem;
+    -webkit-border-radius: 2rem;
+    -moz-border-radius: 2rem;
+    -ms-border-radius: 2rem;
+    -o-border-radius: 2rem;
+}
+
+._LifeShoping .container-fluid ._OneCard ._TextCard ._hover-btn .hover-btn .text {
+    opacity: 0;
+    transform: translateX(-8px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    white-space: nowrap;
+}
+
+._LifeShoping .container-fluid ._OneCard ._TextCard ._hover-btn .hover-btn:hover .text {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+._LifeShoping .container-fluid ._OneCard ._TextCard ._hover-btn .hover-btn .icon {
+    font-size: 20px;
+}
+
+._LifeShoping .container-fluid ._OneCard ._TextCard ._Title span {
+    width: 100%;
+    text-align: left;
+    font-size: 1.3rem;
+    font-weight: 500;
+    text-transform: capitalize;
+    color: var(--color-headline);
+}
+
+._LifeShoping .container-fluid ._OneCard ._TextCard ._Disc {
+    width: 100%;
+    height: 50%;
+    text-align: left;
+}
+
+._LifeShoping .container-fluid ._OneCard ._TextCard ._Disc span {
+    width: 100%;
+    text-align: left;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--color-light-Gray);
+    line-height: 1.5rem;
+}
+
+/* ------------------------------ section three ----------------------------- */
+._SaleComponent {
+    position: relative;
+    width: 100%;
+    height: 70vh;
+    background-image: url(../../assets/images/middle-cta.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    overflow: hidden;
+}
+
+._SaleComponent::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 18, 25, 0.6);
+    z-index: 1;
+}
+
+._SaleComponent>* {
+    position: relative;
+    z-index: 2;
+}
+
+._SaleComponent .container-fluid {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+    justify-content: center;
+}
+
+._SaleComponent .container-fluid ._Title {
+    width: 50%;
+    text-align: center;
+}
+
+._SaleComponent .container-fluid ._Title span {
+    width: 100%;
+    text-align: center;
+    font-size: 3rem;
+    font-weight: 600;
+    line-height: 3.5rem;
+    color: var(--color-white);
+}
+
+
+._SaleComponent .container-fluid ._Disc {
+    width: 50%;
+    text-align: center;
+}
+
+._SaleComponent .container-fluid ._Disc span {
+    width: 100%;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--color-white);
+}
+
+._SaleComponent .container-fluid ._BtnShop {
+    width: 100%;
+    text-align: center;
+}
+
+._SaleComponent .container-fluid ._BtnShop button {
+    background-color: transparent;
+    border: 1px solid var(--color-light-green);
+}
+
+._SaleComponent .container-fluid ._BtnShop button:hover {
+    background-color: var(--color-white);
+    color: var(--color-balck);
+}
+
+
+
+/* ------------------------------ section Four ------------------------------ */
+._Categories {
+    width: 100%;
+    height: 150vh;
+    background-color: var(--color-Secound);
+}
+
+._Categories .container-fluid {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 0rem;
+    gap: 3rem;
+}
+
+._Categories .container-fluid ._Title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: auto;
+    gap: 0.5rem;
+    margin: 1rem 0rem;
+}
+
+._Categories .container-fluid ._Title h2 {
+    width: 100%;
+    text-align: center;
+    font-size: 3.3rem;
+    font-weight: 500;
+    line-height: -5px;
+    color: var(--color-headline);
+}
+
+._Categories .container-fluid ._Title p {
+    width: 50%;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--color-light-Gray);
+    line-height: 2rem;
+    margin: 0 auto;
+}
+
+._Categories .container-fluid ._Title span {
+    width: 50%;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--color-Buttons);
+    line-height: 2rem;
+    margin: 0 auto;
+}
+
+._Categories .container-fluid ._OurCategories {
+    width: 100%;
+    height: 60%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+._Categories .container-fluid ._OurCategories ._OneCard {
+    position: relative;
+    width: calc(22% - 1rem);
+    min-width: 200px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 1rem;
+    border-radius: 1rem;
+    -webkit-border-radius: 1rem;
+    -moz-border-radius: 1rem;
+    -ms-border-radius: 1rem;
+    -o-border-radius: 1rem;
+}
+
+._Categories .container-fluid ._OurCategories ._OneCard img {
+    width: 100%;
+    height: 100%;
+    border-radius: 1rem;
+    -webkit-border-radius: 1rem;
+    -moz-border-radius: 1rem;
+    -ms-border-radius: 1rem;
+    -o-border-radius: 1rem;
+}
+
+._Categories .container-fluid ._OurCategories ._OneCard p {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: 0.5rem;
+    width: 95%;
+    padding: 1rem 0rem;
+    border-radius: 1rem;
+    text-align: center;
+    text-transform: capitalize;
+    letter-spacing: 1px;
+    color: var(--color-balck);
+    background-color: var(--color-white);
+    -webkit-border-radius: 1rem;
+    -moz-border-radius: 1rem;
+    -ms-border-radius: 1rem;
+    -o-border-radius: 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+._Spatial {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-light-Gray);
+}
+
+._Categories .container-fluid ._CountersContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: auto;
+    gap: 1rem;
+    margin: 1rem 0rem;
+}
+
+._Categories .container-fluid ._CountersContainer ._Counters {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+    gap: 1rem;
+}
+
+/* ------------------------------ section five ------------------------------ */
+._Ready {
+    height: 70vh;
+    background-image: url(../../assets/images/Doctors/2.jpg);
+    background-position: top center;
+}
+
+._Ready .container-fluid ._Disc {
+    width: 30%;
+}
+
+._BtnReady {
+    width: 20%;
+    margin: 0 auto;
+}
+
+/* ------------------------------- section six ------------------------------ */
+._StatusContainer {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    background-color: var(--color-white);
+    position: relative;
+    margin: 0rem 0rem 2rem 0rem;
+    padding: 0.5rem 0rem;
+}
+
+._StatusContainer .container-fluid {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0rem 2rem;
+    gap: 2rem;
+}
+
+._StatusContainer .container-fluid ._statusImage {
+    width: calc(95%/2 - 2rem);
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    justify-content: space-around;
+}
+
+._StatusContainer .container-fluid ._statusImage ._Image {
+    width: calc(100%/2);
+    height: auto;
+    border-radius: 1rem;
+    -webkit-border-radius: 1rem;
+    -moz-border-radius: 1rem;
+    -ms-border-radius: 1rem;
+    -o-border-radius: 1rem;
+}
+
+._StatusContainer .container-fluid ._statusImage ._Image img {
+    width: 100%;
+    height: 24rem;
+    border-radius: 1rem;
+}
+
+._StatusContainer .container-fluid ._statusImage ._Image ._Unique {
+    margin-top: 5rem;
+}
+
+._StatusContainer .container-fluid ._TextHero {
+    width: calc(95%/2 - 2rem);
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+}
+
+._StatusContainer .container-fluid ._TextHero ._TitleText {
+    width: 100%;
+}
+
+._StatusContainer .container-fluid ._TextHero ._TitleText h2 {
+    width: 90%;
+    text-align: left;
+    font-size: 3rem;
+    font-weight: 600;
+    line-height: 3.5rem;
+    letter-spacing: -2px;
+    color: var(--color-headline);
+}
+
+._StatusContainer .container-fluid ._TextHero ._DescText {
+    width: 100%;
+}
+
+._StatusContainer .container-fluid ._TextHero ._DescText ._TitleAbout {
+    color: var(--color-Buttons);
+    font-weight: 600;
+}
+
+._StatusContainer .container-fluid ._TextHero ._DescText p {
+    width: 100%;
+    text-align: left;
+    font-weight: 500;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--color-light-Gray);
+    line-height: 2rem;
+}
+
+/* -------------------------------------------------------------------------- */
+._StatusContainer .container-fluid ._TextHeroTwo ._Status ._allStatus {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+._StatusContainer .container-fluid ._TextHero ._Status ._allStatus ._statusContent {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+
+}
+
+
+._StatusContainer .container-fluid ._TextHero ._Status ._allStatus ._statusContent ._statusText,
+._StatusContainer .container-fluid ._TextHero ._Status ._allStatus ._Owner ._Info ._statusText {
+    width: 100%;
+    text-align: left;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    font-weight: 600;
+    color: var(--color-headline);
+}
+
+._StatusContainer .container-fluid ._TextHero ._Status ._allStatus ._Owner {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.3rem !important;
+    margin-top: 1rem;
+}
+
+._StatusContainer .container-fluid ._TextHero ._Status ._allStatus ._Owner ._Image {
+    border: 1px solid var(--color-light-green);
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+}
+
+._StatusContainer .container-fluid ._TextHeroTwo ._Status ._allStatus ._Owner {
+    width: 45%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 0rem;
+}
+
+._StatusContainer .container-fluid ._TextHeroTwo ._Status ._allStatus ._Owner ._Image {
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    padding: 0%;
+    margin-top: -1rem;
+    border: none;
+}
+
+._StatusContainer .container-fluid ._TextHeroTwo ._Status ._allStatus ._Owner ._Image span {
+    width: 100%;
+}
+
+
+._StatusContainer .container-fluid ._TextHero ._Status ._allStatus ._Owner ._Info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+._StatusContainer .container-fluid ._TextHero ._Status ._allStatus ._Owner ._Info ._statusNumber {
+    width: 100%;
+    text-align: left;
+    font-size: 1.1rem;
+    line-height: 1.5rem;
+    color: var(--color-black);
+}
+
+@media (min-width: 534.5px) and (max-width: 991px) {
+    ._HeroContainer {
+        height: 100vh;
+    }
+
+    ._HeroContainer .container-fluid ._TextHero {
+        flex-direction: column;
+        padding: 0rem 1rem;
+        top: 55%;
+    }
+
+    ._HeroContainer .container-fluid ._TextHero ._TextContainer {
+        width: 100%;
+    }
+
+    ._HeroContainer .container-fluid ._TextHero ._ImageHero {
+        display: none;
+    }
+
+    ._HeroContainer .container-fluid ._TextHero ._MainText h2 {
+        width: 90%;
+        font-size: 5.5rem;
+        line-height: 6rem;
+    }
+
+    ._HeroContainer .container-fluid ._TextHero ._DiscHero {
+        width: 80%;
+    }
+
+    ._HeroContainer .container-fluid ._TextHero ._DiscHero p {
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    ._HeroContainer .container-fluid ._TextHero ._BtnShop {
+        gap: 0.5rem;
+        justify-content: space-between;
+        margin-top: 2rem;
+    }
+
+    ._HeroContainer .container-fluid ._TextHero ._BtnShop ._Btn {
+        width: 40%;
+    }
+
+    ._LifeShoping {
+        padding: 3rem 0.5rem;
+    }
+
+    ._LifeShoping .container-fluid {
+        gap: 2rem;
+        justify-content: space-between;
+        padding: 0rem 1rem;
+    }
+
+    ._LifeShoping .container-fluid ._OneCard {
+        width: calc(45% - 1rem);
+        height: 15rem;
+    }
+
+    ._LifeShoping .container-fluid ._OneCard ._TextCard ._Title span {
+        font-size: 1.1rem;
+        font-weight: 500;
+    }
+
+    ._LifeShoping .container-fluid ._OneCard ._TextCard ._Disc span {
+        font-size: 0.9rem;
+    }
+
+    ._SaleComponent .container-fluid {
+        gap: 1rem;
+    }
+
+    ._SaleComponent .container-fluid ._Title {
+        width: 90%;
+    }
+
+    ._SaleComponent .container-fluid ._Title span {
+        font-size: 2rem;
+    }
+
+    ._SaleComponent .container-fluid ._Disc {
+        width: 90%;
+    }
+
+
+    ._SaleComponent .container-fluid ._BtnReady {
+        width: 40%;
+        margin: 0 auto;
+    }
+
+    ._StatusContainer {
+        padding: 0rem;
+    }
+
+    ._StatusContainer {
+        padding: 0rem;
+    }
+
+    ._StatusContainer .container-fluid ._statusImage ._Image img {
+        width: 80%;
+    }
+
+    ._StatusContainer .container-fluid {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        margin: 1rem 0rem;
+        padding: 0rem 1rem;
+        gap: 2rem;
+    }
+
+    ._StatusContainer .container-fluid ._statusImage {
+        width: 100%;
+        margin-top: 2rem;
+    }
+
+    ._StatusContainer .container-fluid ._TextHero {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    ._StatusContainer .container-fluid ._TextHero ._TitleText {
+        display: flex;
+        justify-content: left;
+        padding: 0rem;
+    }
+
+    ._StatusContainer .container-fluid ._TextHero ._TitleText h2 {
+        width: 95%;
+        font-size: 2rem;
+        line-height: 2.5rem;
+    }
+
+    ._StatusContainer .container-fluid ._TextHero ._DescText {
+        display: flex;
+        justify-content: left;
+        padding: 0rem;
+
+    }
+
+    ._StatusContainer .container-fluid ._TextHero ._DescText p {
+        width: 95%;
+    }
+
+    ._StatusContainer .container-fluid ._TextHero ._Status {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+    }
+
+    ._StatusContainer .container-fluid ._TextHero ._Status::before {
+        content: '';
+        width: 95%;
+        margin: 0rem 0rem;
+        border-top: 1px solid var(--color-light-Gray);
+    }
+
+    ._StatusContainer .container-fluid ._TextHero ._Status ._allStatus {
+        width: 95%;
+        padding: 1rem 0rem;
+    }
+
+    ._StatusContainer .container-fluid ._TextHero ._Status ._allStatus ._statusContent ._statusNumber {
+        font-size: 1.5rem;
+    }
+
+
+    /* -------------------------------------------------------------------------- */
+    ._Categories {
+        width: 100%;
+        height: auto;
+    }
+
+    ._Categories .container-fluid {
+        height: auto;
+        padding: 0rem 1rem;
+    }
+
+    ._Categories .container-fluid ._Title {
+        margin-top: 3rem;
+    }
+
+    ._Categories .container-fluid ._Title h2 {
+        font-size: 2rem;
+    }
+
+    ._Categories .container-fluid ._Title p {
+        width: 70%;
+        font-size: 1rem;
+        line-height: 1.9rem;
+    }
+
+    ._Categories .container-fluid ._Title span {
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    ._Categories .container-fluid ._OurCategories {
+        gap: 1rem;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    ._Categories .container-fluid ._OurCategories ._OneCard {
+        width: calc(100% /2 - 2rem);
+    }
+
+    ._Categories .container-fluid ._OurCategories ._OneCard p {
+        font-size: 1.3rem;
+    }
+
+    ._OneProductInHome {
+        width: 45%;
+    }
+}
+
+
+@media (min-width: 0px) and (max-width: 534px) {
+    ._HeroContainer {
+        height: 100vh;
+    }
+
+    ._HeroContainer .container-fluid ._TextHero {
+        flex-direction: column;
+        padding: 0rem 1rem;
+    }
+
+    ._HeroContainer .container-fluid ._TextHero ._TextContainer {
+        width: 100%;
+    }
+
+    ._HeroContainer .container-fluid ._TextHero ._ImageHero {
+        display: none;
+    }
+
+    ._HeroContainer .container-fluid ._TextHero ._MainText h2 {
+        font-size: 4rem;
+        line-height: 4rem;
+    }
+
+    ._HeroContainer .container-fluid ._TextHero ._DiscHero p {
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    ._HeroContainer .container-fluid ._TextHero ._BtnShop {
+        gap: 0.5rem;
+        justify-content: space-between;
+        margin-top: 2rem;
+    }
+
+    ._HeroContainer .container-fluid ._TextHero ._BtnShop ._Btn {
+        width: 50%;
+    }
+
+    ._HeroContainer .container-fluid ._TextHero ._BtnShop ._Clients ._Status span {
+        display: none;
+    }
+
+    ._LifeShoping {
+        padding: 3rem 0.5rem;
+    }
+
+    ._LifeShoping .container-fluid {
+        gap: 2rem;
+        justify-content: space-evenly;
+        padding: 0rem 1rem;
+
+    }
+
+    ._LifeShoping .container-fluid ._OneCard {
+        width: calc(100% - 1rem);
+        height: 15rem;
+    }
+
+
+    ._StatusContainer {
+        padding: 0rem;
+    }
+
+    ._StatusContainer .container-fluid ._statusImage {
+        justify-content: space-between;
+    }
+
+    ._StatusContainer .container-fluid ._statusImage ._Image img {
+        width: 95%;
+        height: 15rem;
+    }
+
+    ._StatusContainer .container-fluid ._statusImage ._Image ._Unique {
+        margin-top: 0rem;
+        margin: 0 auto;
+    }
+
+    ._StatusContainer .container-fluid {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        margin: 1rem 0rem;
+        padding: 0rem 1rem;
+        gap: 2rem;
+    }
+
+    ._StatusContainer .container-fluid ._statusImage {
+        width: 100%;
+        margin-top: 2rem;
+    }
+
+    ._StatusContainer .container-fluid ._TextHero {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    ._StatusContainer .container-fluid ._TextHero ._TitleText {
+        display: flex;
+        justify-content: center;
+    }
+
+    ._StatusContainer .container-fluid ._TextHero ._TitleText h2 {
+        width: 100%;
+        font-size: 2rem;
+        line-height: 2.5rem;
+    }
+
+    ._StatusContainer .container-fluid ._TextHero ._DescText p {
+        font-size: 1rem;
+        line-height: 1.9rem;
+    }
+
+    ._StatusContainer .container-fluid ._TextHeroTwo ._Status ._allStatus {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+        gap: 1rem;
+    }
+
+    ._StatusContainer .container-fluid ._TextHero ._Status ._allStatus ._Owner {
+        width: 100%;
+    }
+
+    ._BtnStatus {
+        width: 70%;
+    }
+
+    /* -------------------------------------------------------------------------- */
+    ._SaleComponent .container-fluid {
+        gap: 1rem;
+    }
+
+    ._SaleComponent .container-fluid ._Title {
+        width: 100%;
+    }
+
+    ._SaleComponent .container-fluid ._Title span {
+        font-size: 1.5rem;
+        line-height: 2rem;
+    }
+
+    ._SaleComponent .container-fluid ._Disc {
+        width: 90%;
+    }
+
+    ._SaleComponent .container-fluid ._Disc span {
+        font-size: 0.9rem;
+    }
+
+    ._SaleComponent .container-fluid ._BtnReady {
+        width: 50%;
+        margin: 0 auto;
+    }
+
+    /* -------------------------------------------------------------------------- */
+    ._Categories {
+        width: 100%;
+        height: auto;
+    }
+
+    ._Categories .container-fluid {
+        height: auto;
+        padding: 0rem 1rem;
+    }
+
+    ._Categories .container-fluid ._Title {
+        margin-top: 3rem;
+    }
+
+    ._Categories .container-fluid ._Title h2 {
+        font-size: 2rem;
+    }
+
+    ._Categories .container-fluid ._Title p {
+        width: 100%;
+        font-size: 1rem;
+        line-height: 1.9rem;
+    }
+
+    ._Categories .container-fluid ._Title span {
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    ._Categories .container-fluid ._OurCategories {
+        gap: 1rem;
+    }
+
+    ._Categories .container-fluid ._OurCategories ._OneCard {
+        width: 100%;
+    }
+
+    ._Categories .container-fluid ._OurCategories ._OneCard p {
+        font-size: 1.5rem;
+    }
+
+    ._Categories .container-fluid ._OurCategories {
+        gap: 2rem;
+    }
+
+    ._Categories .container-fluid ._OurCategories ._OneCard {
+        width: 90%;
+    }
+
+    ._OneProductInHome {
+        width: 100%;
+    }
+
+}

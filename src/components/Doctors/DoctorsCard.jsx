@@ -4,7 +4,9 @@ import { motion } from "framer-motion";
 const DoctorCard = ({ doctor, size = "large", service, showBooking = false }) => {
   const isSmall = size === "small";
   const navigate = useNavigate();
-
+ const fullName = doctor.fullName || `${doctor.firstName} ${doctor.lastName}`;
+  const specialization = doctor.specialization?.join(", ") || "General";
+  
   const handleCardClick = () => {
     navigate(`/doctor/${doctor._id}`);
   };

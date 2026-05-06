@@ -6,7 +6,6 @@ import { toast, ToastContainer } from "react-toastify";
 
 const columns = [
   { label: "Image", key: "image", minWidth: 150 },
-  { label: "ID", key: "_id", minWidth: 200 },
   { label: "Service Name", key: "name", minWidth: 150 },
   { label: "Category", key: "category", minWidth: 150 },
   { label: "Price", key: "price", minWidth: 100 },
@@ -38,7 +37,7 @@ const Services = () => {
   let DeleteById = async (id) => {
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`/services/${id}`, {
+      await axios.delete(`/dashboard/services/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

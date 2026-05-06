@@ -13,6 +13,7 @@ const DoctorList = () => {
   const [sortBy, setSortBy] = useState("createdAt-desc");
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [total, setTotal] = useState(0);
   const [keyword, setKeyword] = useState("");
   const [showMobileFilters, setShowMobileFilters] = useState(false);
   const navigate = useNavigate();
@@ -26,12 +27,14 @@ const DoctorList = () => {
     { label: "Top Rated", value: "averageRating-desc" },
     { label: "Lowest Rated", value: "averageRating-asc" },
   ];
+
   useEffect(() => {
     AOS.init({
       duration: 1000,
       once: true,
     });
   }, []);
+
   useEffect(() => {
     const fetchSpecializations = async () => {
       try {
@@ -48,6 +51,21 @@ const DoctorList = () => {
         ]);
       } catch (err) {
         console.error("Error fetching specializations:", err);
+        try {
+          const { data } = await axiosInstance.get("/doctors/specializations");
+          const dynamicOptions = Array.isArray(data)
+            ? data.map((spec) => ({
+                label: spec,
+                value: spec,
+              }))
+            : [];
+          setSpecializationOptions([
+            { label: "All", value: "" },
+            ...dynamicOptions,
+          ]);
+        } catch (fallbackErr) {
+          console.error("Fallback also failed:", fallbackErr);
+        }
       }
     };
 
@@ -60,8 +78,8 @@ const DoctorList = () => {
         `/search/doctors?keyword=${query}`
       );
       const suggestions = [];
-      data.doctors.forEach((doc) => {
-        const fullName = `Dr. ${doc.user.firstName} ${doc.user.lastName}`;
+      data.doctors?.forEach((doc) => {
+        const fullName = `${doc.firstName} ${doc.lastName}`;
         suggestions.push({
           label: fullName,
           value: doc._id,
@@ -78,6 +96,7 @@ const DoctorList = () => {
   const fetchDoctors = async () => {
     try {
       const query = new URLSearchParams();
+      
       if (specialization) query.append("specialization", specialization);
       if (sortBy) {
         const [field, order] = sortBy.split("-");
@@ -88,11 +107,24 @@ const DoctorList = () => {
       query.append("page", page);
       query.append("limit", 8);
 
-      const { data } = await axiosInstance.get(`/doctor?${query.toString()}`);
-      setDoctors(data?.doctors || []);
-      setTotalPages(Math.ceil(data.total / 8));
+      let response;
+      try {
+        response = await axiosInstance.get(`/doctor?${query.toString()}`);
+      } catch (err) {
+        if (err.response?.status === 404) {
+          response = await axiosInstance.get(`/doctors?${query.toString()}`);
+        } else {
+          throw err;
+        }
+      }
+      
+      const doctorsData = response.data.doctors || response.data || [];
+      setDoctors(doctorsData);
+      setTotal(response.data.total || doctorsData.length);
+      setTotalPages(Math.ceil((response.data.total || doctorsData.length) / 8));
     } catch (err) {
       console.error("Error fetching doctors:", err);
+      setDoctors([]);
     }
   };
 
@@ -108,7 +140,6 @@ const DoctorList = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Compact Hero Section */}
       <div
         className="relative py-16 md:py-16 px-6 md:px-12 lg:px-24 min-h-[500px] md:min-h-[500px] lg:min-h-[500px] flex items-center"
         style={{
@@ -122,7 +153,7 @@ const DoctorList = () => {
             data-aos="fade-down"
             data-aos-delay="100"
           >
-            Meet Our Dental Team
+            Meet Our Medical Team
           </p>
           <span
             className="flex items-center justify-center gap-0.5 text-3xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold"
@@ -130,10 +161,9 @@ const DoctorList = () => {
             data-aos="fade-down"
             data-aos-delay="200"
           >
-            Committed to Your Smile
+            Committed to Your Health
           </span>
 
-          {/* Breadcrumb */}
           <div
             className="flex flex-wrap items-center justify-center gap-x-2 text-sm sm:text-base md:text-lg border-t py-5 my-5 w-full"
             data-aos="fade-down"
@@ -146,17 +176,12 @@ const DoctorList = () => {
             >
               Home
             </span>
+            <span>›</span>
             <span
               className="hover:text-blue-600 cursor-pointer transition-colors font-medium"
               style={{ color: "var(--color-headline)" }}
             >
-              ›
-            </span>
-            <span
-              className="hover:text-blue-600 cursor-pointer transition-colors font-medium"
-              style={{ color: "var(--color-headline)" }}
-            >
-              Dentists
+              Doctors
             </span>
           </div>
         </div>
@@ -181,20 +206,10 @@ const DoctorList = () => {
         <div className="lg:hidden mb-6 flex justify-end">
           <button
             onClick={() => setShowMobileFilters(!showMobileFilters)}
-            className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-[var(--color-white)] bg-[var(--color-Buttons)] rounded-md shadow hover:bg-[var(--color-Buttons-disabled)] transition-colors"
+            className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-white bg-blue-600 rounded-md shadow hover:bg-blue-700 transition-colors"
           >
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={2}
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M3 4h18M6 8h12M10 12h4M12 16h0"
-              />
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3 4h18M6 8h12M10 12h4M12 16h0" />
             </svg>
             Filters & Sort
           </button>
@@ -254,7 +269,6 @@ const DoctorList = () => {
                       options={specializationOptions}
                       selected={specialization}
                       onChange={setSpecialization}
-                      
                     />
                   </div>
                   <div>
@@ -278,7 +292,7 @@ const DoctorList = () => {
             {doctors.length > 0 ? (
               <>
                 <motion.div
-                  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 "
+                  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
                   style={{ marginTop: "-4rem" }}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
@@ -311,15 +325,11 @@ const DoctorList = () => {
                     >
                       Previous
                     </button>
-
                     <div className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg">
                       Page {page} of {totalPages}
                     </div>
-
                     <button
-                      onClick={() =>
-                        setPage((p) => Math.min(totalPages, p + 1))
-                      }
+                      onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                       className="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                       disabled={page === totalPages}
                     >
@@ -336,23 +346,23 @@ const DoctorList = () => {
                 transition={{ duration: 0.6, delay: 0.4 }}
               >
                 <div className="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
-                  <svg
-                    className="w-8 h-8 text-gray-400"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                    />
+                  <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                   </svg>
                 </div>
                 <p className="text-lg font-medium text-gray-500">
                   No doctors found for the selected criteria.
                 </p>
+                <button
+                  onClick={() => {
+                    setSpecialization("");
+                    setSortBy("createdAt-desc");
+                    setKeyword("");
+                  }}
+                  className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                >
+                  Clear Filters
+                </button>
               </motion.div>
             )}
           </div>

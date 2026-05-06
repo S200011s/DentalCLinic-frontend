@@ -16,6 +16,7 @@ import {
   ListItemText,
   Typography,
   Grid,
+  CircularProgress,
 } from "@mui/material";
 import { IoMdClose } from "react-icons/io";
 import ButtonSubmit from "../Buttons/ButtonSubmit";
@@ -27,8 +28,14 @@ const allSpecializations = [
   "Orthodontist",
   "Surgeon",
   "Neurologist",
+  "Cardiologist",
+  "Pediatrician",
+  "Dermatologist",
+  "Ophthalmologist",
 ];
-const allCertifications = ["MBBS", "PhD", "FRCS", "DDS"];
+
+const allCertifications = ["MBBS", "PhD", "FRCS", "DDS", "MD", "Board Certified"];
+
 const allDays = [
   "Sunday",
   "Monday",
@@ -47,7 +54,8 @@ function PopupsAddDoctors({
   onSuccess,
 }) {
   const [formData, setFormData] = useState({
-    userId: "",
+    firstName: "",
+    lastName: "",
     specialization: [],
     experience: "",
     certifications: [],
@@ -59,6 +67,9 @@ function PopupsAddDoctors({
   });
 
   const [allServices, setAllServices] = useState([]);
+  const [submitting, setSubmitting] = useState(false);
+  const [existingProfileImage, setExistingProfileImage] = useState(null);
+  const [existingWorkImages, setExistingWorkImages] = useState([]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -84,7 +95,7 @@ function PopupsAddDoctors({
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const { data } = await axios.get("/services");
+        const { data } = await axios.get("/services?limit=1000");
         setAllServices(data.services || []);
       } catch (err) {
         console.error("Error fetching services:", err);
@@ -108,109 +119,235 @@ function PopupsAddDoctors({
     updatedTimes[dayIndex].slots.push({ from: "", to: "" });
     setFormData((prev) => ({ ...prev, availableTimes: updatedTimes }));
   };
-  useEffect(() => {
-    if (isEdit && doctorData) {
-      console.log(doctorData);
 
-      setFormData({
-        // userId: doctorData._id || "",
-        userId: doctorData.userId || doctorData._id || "",
-        specialization: Array.isArray(doctorData.specialization)
-          ? doctorData.specialization
-          : doctorData.specialization
-          ? [doctorData.specialization]
-          : [],
-        experience: doctorData.experience || "",
-        certifications: Array.isArray(doctorData.certifications)
-          ? doctorData.certifications
-          : doctorData.certifications
-          ? [doctorData.certifications]
-          : [],
-        bio: doctorData.bio || "",
-        availableTimes: doctorData.availableTimes || [],
-        profileImage: null,
-        workImages: [],
-        services: Array.isArray(doctorData.services)
-          ? doctorData.services.map((s) => (typeof s === "object" ? s._id : s))
-          : [],
-      });
-    } else {
-      setFormData({
-        userId: "",
-        specialization: [],
-        experience: "",
-        certifications: [],
-        bio: "",
-        availableTimes: [],
-        profileImage: null,
-        workImages: [],
-        services: [],
+  const removeSlot = (dayIndex, slotIndex) => {
+    const updatedTimes = [...formData.availableTimes];
+    updatedTimes[dayIndex].slots.splice(slotIndex, 1);
+    setFormData((prev) => ({ ...prev, availableTimes: updatedTimes }));
+  };
+
+  const removeDay = (dayIndex) => {
+    const updatedTimes = [...formData.availableTimes];
+    updatedTimes.splice(dayIndex, 1);
+    setFormData((prev) => ({ ...prev, availableTimes: updatedTimes }));
+  };
+useEffect(() => {
+  if (isEdit && doctorData) {
+    console.log("Loading doctor data for edit:", doctorData);
+    
+    let cleanAvailableTimes = [];
+    if (doctorData.availableTimes && doctorData.availableTimes.length > 0) {
+      cleanAvailableTimes = doctorData.availableTimes.map(day => ({
+        day: day.day,
+        slots: (day.slots || []).map(slot => ({
+          from: slot.from,
+          to: slot.to
+        }))
+      }));
+    }
+    
+    setFormData({
+      firstName: doctorData.firstName || "",
+      lastName: doctorData.lastName || "",
+      specialization: doctorData.specialization || [],
+      experience: doctorData.experience || "",
+      certifications: doctorData.certifications || [],
+      bio: doctorData.bio || "",
+      availableTimes: cleanAvailableTimes, 
+      profileImage: null,
+      workImages: [],
+      services: doctorData.services?.map((s) => (typeof s === "object" ? s._id : s)) || [],
+    });
+    
+    setExistingProfileImage(doctorData.profileImage || null);
+    setExistingWorkImages(doctorData.workImages || []);
+  }
+}, [isEdit, doctorData, open]);
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  
+  if (!formData.firstName?.trim()) {
+    toast.error("First name is required");
+    return;
+  }
+  if (!formData.lastName?.trim()) {
+    toast.error("Last name is required");
+    return;
+  }
+  if (!formData.experience) {
+    toast.error("Experience is required");
+    return;
+  }
+  if (!formData.bio?.trim()) {
+    toast.error("Bio is required");
+    return;
+  }
+  if (!formData.specialization || formData.specialization.length === 0) {
+    toast.error("At least one specialization is required");
+    return;
+  }
+  if (!formData.certifications || formData.certifications.length === 0) {
+    toast.error("At least one certification is required");
+    return;
+  }
+  
+  if (!isEdit) {
+    if (!formData.profileImage) {
+      toast.error("Profile image is required");
+      return;
+    }
+    if (!formData.workImages || formData.workImages.length === 0) {
+      toast.error("At least one work image is required");
+      return;
+    }
+  }
+
+  setSubmitting(true);
+  
+  try {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      toast.error("You must be logged in");
+      return;
+    }
+
+    const formDataToSend = new FormData();
+
+    formDataToSend.append("firstName", formData.firstName.trim());
+    formDataToSend.append("lastName", formData.lastName.trim());
+    formDataToSend.append("experience", String(formData.experience));
+    formDataToSend.append("bio", formData.bio.trim());
+
+    if (formData.specialization && formData.specialization.length > 0) {
+      formData.specialization.forEach((item) => {
+        if (item && item.trim()) {
+          formDataToSend.append("specialization", item.trim());
+        }
       });
     }
-  }, [isEdit, doctorData, open]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const token = localStorage.getItem("token");
-      const formDataToSend = new FormData();
-
-      formDataToSend.append("type", "doctor");
-
-      if (!isEdit) {
-        formDataToSend.append("userId", formData.userId);
-      }
-
-      formDataToSend.append("experience", formData.experience);
-      formDataToSend.append("bio", formData.bio);
-
-      formData.specialization.forEach((item) =>
-        formDataToSend.append("specialization", item)
-      );
-      formData.certifications.forEach((item) =>
-        formDataToSend.append("certifications", item)
-      );
-      formData.services.forEach((id) => formDataToSend.append("services", id));
-
-      formDataToSend.append(
-        "availableTimes",
-        JSON.stringify(formData.availableTimes)
-      );
-
-      if (formData.profileImage) {
-        formDataToSend.append("profileImage", formData.profileImage);
-      }
-
-      formData.workImages.forEach((file) =>
-        formDataToSend.append("workImages", file)
-      );
-      // formData.services.forEach((id) =>
-      //   formDataToSend.append("services[]", id)
-      // );
-
-      const url = isEdit ? `/doctor/${doctorData._id}` : "/doctor";
-      const method = isEdit ? "put" : "post";
-
-      await axios[method](url, formDataToSend, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
-        },
+  
+    if (formData.certifications && formData.certifications.length > 0) {
+      formData.certifications.forEach((item) => {
+        if (item && item.trim()) {
+          formDataToSend.append("certifications", item.trim());
+        }
       });
+    }
+    
+   
+    if (formData.services && formData.services.length > 0) {
+      formData.services.forEach((id) => {
+        if (id) formDataToSend.append("services", id);
+      });
+    }
 
-      toast.success(
-        isEdit ? "Doctor updated successfully" : "Doctor created successfully"
-      );
-      onSuccess();
-    } catch (error) {
-      const serverErrors = error.response?.data?.errors;
+    if (formData.availableTimes && formData.availableTimes.length > 0) {
+      const cleanAvailableTimes = formData.availableTimes
+        .map(day => ({
+          day: day.day,
+          slots: (day.slots || [])
+            .filter(slot => slot.from && slot.to) 
+            .map(slot => ({
+              from: slot.from,
+              to: slot.to
+              
+            }))
+        }))
+        .filter(day => day.day && day.slots.length > 0); 
+      
+      if (cleanAvailableTimes.length > 0) {
+        formDataToSend.append("availableTimes", JSON.stringify(cleanAvailableTimes));
+        console.log("📅 Clean availableTimes:", cleanAvailableTimes);
+      }
+    }
+
+    if (formData.profileImage) {
+      formDataToSend.append("profileImage", formData.profileImage);
+    }
+
+    if (formData.workImages && formData.workImages.length > 0) {
+      formData.workImages.forEach((file) => {
+        if (file) formDataToSend.append("workImages", file);
+      });
+    }
+
+    let url = "/dashboard/doctors";
+    let method = "post";
+    
+    if (isEdit) {
+      if (!doctorData?._id) {
+        toast.error("Doctor ID is missing");
+        return;
+      }
+      url = `/dashboard/doctors/${doctorData._id}`;
+      method = "put";
+    }
+
+    console.log(`📤 Sending ${method.toUpperCase()} request to:`, url);
+    console.log("Doctor ID:", doctorData?._id);
+    console.log("FormData contents:");
+    for (let pair of formDataToSend.entries()) {
+      console.log(`  ${pair[0]}:`, pair[1] instanceof File ? `[File: ${pair[1].name}]` : pair[1]);
+    }
+
+    const response = await axios({
+      method,
+      url,
+      data: formDataToSend,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    console.log("✅ Success response:", response.data);
+
+    toast.success(
+      isEdit ? "Doctor updated successfully" : "Doctor created successfully"
+    );
+    
+    if (onSuccess) onSuccess();
+    setOpen(false);
+    
+    setFormData({
+      firstName: "",
+      lastName: "",
+      specialization: [],
+      experience: "",
+      certifications: [],
+      bio: "",
+      availableTimes: [],
+      profileImage: null,
+      workImages: [],
+      services: [],
+    });
+    setExistingProfileImage(null);
+    setExistingWorkImages([]);
+    
+  } catch (error) {
+    console.error("❌ Error details:", error.response?.data || error.message);
+    
+    if (error.response?.data?.errors) {
+      const serverErrors = error.response.data.errors;
       if (Array.isArray(serverErrors)) {
         toast.error(serverErrors.map((e) => e.message).join(" | "));
+      } else if (typeof serverErrors === 'object') {
+        const messages = Object.values(serverErrors).flat();
+        toast.error(messages.join(" | "));
       } else {
-        toast.error("Error submitting doctor");
+        toast.error(String(serverErrors));
       }
+    } else if (error.response?.data?.message) {
+      toast.error(error.response.data.message);
+    } else {
+      toast.error(error.message || "Error submitting doctor");
     }
-  };
+  } finally {
+    setSubmitting(false);
+  }
+};
 
   return (
     <div>
@@ -245,15 +382,30 @@ function PopupsAddDoctors({
               marginTop: 16,
             }}
           >
-            <TextField
-              label="User ID"
-              name="userId"
-              value={formData.userId}
-              onChange={handleChange}
-              required
-            />
+            <Grid container spacing={2}>
+              <Grid size={{ xs: 12, sm: 6 }}>
+                <TextField
+                  label="First Name"
+                  name="firstName"
+                  value={formData.firstName}
+                  onChange={handleChange}
+                  required
+                  fullWidth
+                />
+              </Grid>
+              <Grid size={{ xs: 12, sm: 6 }}>
+                <TextField
+                  label="Last Name"
+                  name="lastName"
+                  value={formData.lastName}
+                  onChange={handleChange}
+                  required
+                  fullWidth
+                />
+              </Grid>
+            </Grid>
 
-            <FormControl fullWidth>
+            <FormControl fullWidth required>
               <InputLabel>Specializations</InputLabel>
               <Select
                 multiple
@@ -265,9 +417,7 @@ function PopupsAddDoctors({
               >
                 {allSpecializations.map((spec) => (
                   <MenuItem key={spec} value={spec}>
-                    <Checkbox
-                      checked={formData.specialization.includes(spec)}
-                    />
+                    <Checkbox checked={formData.specialization.includes(spec)} />
                     <ListItemText primary={spec} />
                   </MenuItem>
                 ))}
@@ -283,7 +433,7 @@ function PopupsAddDoctors({
               required
             />
 
-            <FormControl fullWidth>
+            <FormControl fullWidth required>
               <InputLabel>Certifications</InputLabel>
               <Select
                 multiple
@@ -295,9 +445,7 @@ function PopupsAddDoctors({
               >
                 {allCertifications.map((cert) => (
                   <MenuItem key={cert} value={cert}>
-                    <Checkbox
-                      checked={formData.certifications.includes(cert)}
-                    />
+                    <Checkbox checked={formData.certifications.includes(cert)} />
                     <ListItemText primary={cert} />
                   </MenuItem>
                 ))}
@@ -305,7 +453,7 @@ function PopupsAddDoctors({
             </FormControl>
 
             <FormControl fullWidth>
-              <InputLabel>Services</InputLabel>
+              <InputLabel>Services (Optional)</InputLabel>
               <Select
                 multiple
                 name="services"
@@ -314,20 +462,19 @@ function PopupsAddDoctors({
                   setFormData((prev) => ({ ...prev, services: e.target.value }))
                 }
                 input={<OutlinedInput label="Services" />}
-                renderValue={(selected) =>
-                  selected
+                renderValue={(selected) => {
+                  if (selected.length === 0) return "No services selected";
+                  return selected
                     .map((id) => {
                       const service = allServices.find((s) => s._id === id);
                       return service ? service.name : id;
                     })
-                    .join(", ")
-                }
+                    .join(", ");
+                }}
               >
                 {allServices.map((service) => (
                   <MenuItem key={service._id} value={service._id}>
-                    <Checkbox
-                      checked={formData.services.includes(service._id)}
-                    />
+                    <Checkbox checked={formData.services.includes(service._id)} />
                     <ListItemText primary={service.name} />
                   </MenuItem>
                 ))}
@@ -346,7 +493,7 @@ function PopupsAddDoctors({
 
             <Box>
               <Typography variant="subtitle1" mt={2}>
-                Profile Image
+                Profile Image {!isEdit && "(Required)"}
               </Typography>
               <input
                 type="file"
@@ -358,9 +505,14 @@ function PopupsAddDoctors({
                   }))
                 }
               />
+              {isEdit && existingProfileImage && !formData.profileImage && (
+                <Typography variant="caption" color="textSecondary" display="block" sx={{ mt: 1 }}>
+                  Current image will be kept. Select a new file to change.
+                </Typography>
+              )}
 
               <Typography variant="subtitle1" mt={2}>
-                Work Images
+                Work Images {!isEdit && "(Required)"}
               </Typography>
               <input
                 type="file"
@@ -373,6 +525,11 @@ function PopupsAddDoctors({
                   }))
                 }
               />
+              {isEdit && existingWorkImages.length > 0 && formData.workImages.length === 0 && (
+                <Typography variant="caption" color="textSecondary" display="block" sx={{ mt: 1 }}>
+                  {existingWorkImages.length} existing image(s) will be kept. Select new files to replace all.
+                </Typography>
+              )}
             </Box>
 
             <Box>
@@ -386,17 +543,22 @@ function PopupsAddDoctors({
                   p={2}
                   border="1px solid #ccc"
                   borderRadius={2}
+                  position="relative"
                 >
+                  <IconButton
+                    size="small"
+                    onClick={() => removeDay(dayIndex)}
+                    sx={{ position: "absolute", top: 5, right: 5 }}
+                  >
+                    <IoMdClose />
+                  </IconButton>
+                  
                   <FormControl fullWidth sx={{ mb: 1 }}>
                     <InputLabel>Day</InputLabel>
                     <Select
                       value={day.day}
                       onChange={(e) =>
-                        handleAvailableTimeChange(
-                          dayIndex,
-                          "day",
-                          e.target.value
-                        )
+                        handleAvailableTimeChange(dayIndex, "day", e.target.value)
                       }
                     >
                       {allDays.map((d) => (
@@ -408,40 +570,40 @@ function PopupsAddDoctors({
                   </FormControl>
 
                   {day.slots.map((slot, slotIndex) => (
-                    <Grid container spacing={2} key={slotIndex}>
-                      <Grid item xs={6}>
+                    <Grid container spacing={2} key={slotIndex} sx={{ mb: 1 }}>
+                      <Grid size={{ xs: 12, sm: 5 }}>
                         <TextField
                           label="From"
                           type="time"
                           fullWidth
                           value={slot.from}
                           onChange={(e) =>
-                            handleSlotChange(
-                              dayIndex,
-                              slotIndex,
-                              "from",
-                              e.target.value
-                            )
+                            handleSlotChange(dayIndex, slotIndex, "from", e.target.value)
                           }
                           InputLabelProps={{ shrink: true }}
                         />
                       </Grid>
-                      <Grid item xs={6}>
+                      <Grid size={{ xs: 12, sm: 5 }}>
                         <TextField
                           label="To"
                           type="time"
                           fullWidth
                           value={slot.to}
                           onChange={(e) =>
-                            handleSlotChange(
-                              dayIndex,
-                              slotIndex,
-                              "to",
-                              e.target.value
-                            )
+                            handleSlotChange(dayIndex, slotIndex, "to", e.target.value)
                           }
                           InputLabelProps={{ shrink: true }}
                         />
+                      </Grid>
+                      <Grid size={{ xs: 12, sm: 2 }}>
+                        <Button
+                          size="small"
+                          color="error"
+                          onClick={() => removeSlot(dayIndex, slotIndex)}
+                          fullWidth
+                        >
+                          Remove
+                        </Button>
                       </Grid>
                     </Grid>
                   ))}
@@ -453,8 +615,13 @@ function PopupsAddDoctors({
               <Button onClick={addAvailableDay}>+ Add Day</Button>
             </Box>
 
-            <Button type="submit" variant="contained" color="primary">
-              {isEdit ? "Update Now" : "Add Now"}
+            <Button 
+              type="submit" 
+              variant="contained" 
+              color="primary"
+              disabled={submitting}
+            >
+              {submitting ? <CircularProgress size={24} /> : (isEdit ? "Update Now" : "Add Now")}
             </Button>
           </form>
         </DialogContent>

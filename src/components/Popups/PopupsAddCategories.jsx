@@ -50,8 +50,10 @@ function PopupAddCategory({
       if (!isEdit || formData.description.trim())
         payload.description = formData.description.trim();
 
-      const url = isEdit ? `/category/${categoryData._id}` : "/category";
-      const method = isEdit ? "put" : "post";
+       const url = isEdit 
+        ? `/dashboard/categories/${categoryData._id}` 
+        : "/dashboard/categories"; 
+        const method = isEdit ? "put" : "post";
 
       await axios[method](url, payload, {
         headers: {
@@ -71,7 +73,7 @@ function PopupAddCategory({
       if (Array.isArray(serverErrors)) {
         toast.error(serverErrors.map((e) => e.message).join(" | "));
       } else {
-        toast.error("Error submitting category");
+        toast.error(error.response?.data?.message || "Error submitting category");
       }
     }
   };

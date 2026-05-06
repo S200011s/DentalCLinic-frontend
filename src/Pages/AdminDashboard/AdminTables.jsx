@@ -13,15 +13,18 @@ import Swal from "sweetalert2";
 
 function AdminTables({ columns, rows, DeleteById, onEdit }) {
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+const [rowsPerPage, setRowsPerPage] = React.useState(7);
+
+const handleChangeRowsPerPage = (event) => {
+  const newValue = +event.target.value;
+  setRowsPerPage(newValue);
+  setPage(0);
+};
+
+
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
   };
 
   const handleDelete = (id) => {

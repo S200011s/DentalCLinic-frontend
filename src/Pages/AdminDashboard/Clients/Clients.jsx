@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const columns = [
-  { label: "ID", key: "_id", minWidth: 200 },
   { label: "First Name", key: "firstName", minWidth: 150 },
   { label: "Last Name", key: "lastName", minWidth: 150 },
   { label: "Email", key: "email", minWidth: 150 },

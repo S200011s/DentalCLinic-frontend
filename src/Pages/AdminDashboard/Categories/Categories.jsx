@@ -5,7 +5,6 @@ import axios from "../../../api/axiosInstance";
 import { toast, ToastContainer } from "react-toastify";
 
 const columns = [
-  { label: "ID", key: "_id", minWidth: 150 },
   { label: "Name", key: "name", minWidth: 200 },
   { label: "Description", key: "description", minWidth: 300 },
   { label: "Actions", key: "actions", minWidth: 150, align: "right" },
@@ -18,25 +17,25 @@ const Categories = () => {
   const [isEdit, setIsEdit] = useState(false);
 
   const getAllCategories = async () => {
-    try {
-      const { data } = await axios.get("/category");
-      const categories = Array.isArray(data) ? data : data.categories || [];
-      const mapped = categories.map((cat) => ({
-        _id: cat._id,
-        name: cat.name,
-        description: cat.description,
-      }));
-      setRows(mapped);
-    } catch (err) {
-      console.log(err);
-      toast.error("Error fetching categories");
-    }
-  };
+  try {
+    const { data } = await axios.get("/category");
+    const categories = Array.isArray(data) ? data : data.categories || [];
+    const mapped = categories.map((cat) => ({
+      _id: cat._id,
+      name: cat.name,
+      description: cat.description,
+    }));
+    setRows(mapped);
+  } catch (err) {
+    console.log(err);
+    toast.error("Error fetching categories");
+  }
+};
 
   const DeleteById = async (id) => {
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`/category/${id}`, {
+      await axios.delete(`/dashboard/categories/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -44,11 +43,16 @@ const Categories = () => {
       setRows((prev) => prev.filter((cat) => cat._id !== id));
       toast.success("Category deleted successfully");
     } catch (err) {
-      console.log(err);
-
-      toast.error("Failed to delete category");
+    console.error("Delete error:", err.response?.data);
+    
+    const errorMessage = err.response?.data?.message || "Failed to delete category";
+    toast.error(errorMessage);
+    
+    if (errorMessage.includes("reassign") || errorMessage.includes("linked services")) {
+      toast.warning("Please delete or reassign all services in this category first");
     }
-  };
+  }
+};
 
   const handleEdit = (category) => {
     setSelectedCategory(category);

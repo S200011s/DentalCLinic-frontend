@@ -6,15 +6,13 @@ import { toast, ToastContainer } from "react-toastify";
 
 const columns = [
   { label: "ProfileImage", key: "profileImage", minWidth: 150 },
-  { label: "ID", key: "_id", minWidth: 200 },
-  { label: "User Name", key: "userName", minWidth: 150 },
+  { label: "Full Name", key: "fullName", minWidth: 150 },
   { label: "Specialization", key: "specialization", minWidth: 150 },
   { label: "Experience (Years)", key: "experience", minWidth: 200 },
   { label: "Bio", key: "bio", minWidth: 400 },
   { label: "Certifications", key: "certifications", minWidth: 250 },
   { label: "Services", key: "services", minWidth: 200 },
   { label: "AverageRating", key: "averageRating", minWidth: 50 },
-  { label: "WorkImages", key: "workImages", minWidth: 200 },
   { label: "Actions", key: "actions", minWidth: 150, align: "right" },
 ];
 
@@ -24,50 +22,80 @@ const Doctors = () => {
   const [selectedDoctor, setSelectedDoctor] = useState(null);
   const [isEdit, setIsEdit] = useState(false);
 
-  const getallDoctors = async () => {
+  const getAllDoctors = async () => {
     try {
-      const { data } = await axios.get("/doctor?limit=1000");
+      const token = localStorage.getItem("token");
+          const { data } = await axios.get("/doctor?limit=1000");
+
       const mapped = data.doctors.map((doc) => ({
         _id: doc._id,
-        userName: doc.fullName || "N/A",
+        firstName: doc.firstName,
+        lastName: doc.lastName,
+        fullName: `${doc.firstName} ${doc.lastName}`,
         specialization: doc.specialization?.join(" | ") || "N/A",
-        averageRating: doc.averageRating,
+        averageRating: doc.averageRating || 0,
         profileImage: doc.profileImage,
-        experience: doc.experience || "N/A",
-        bio: doc.bio || "N/A",
+        experience: doc.experience,
+        bio: doc.bio,
         certifications: doc.certifications?.join(" | ") || "N/A",
-        services: doc.services?.map((s) => s.name).join(" | ") || "N/A",
-        workImages: doc.workImages?.join(" | ") || "N/A",
+        services: doc.services?.map((s) => s?.name).join(" | ") || "N/A",
+        originalData: {
+          firstName: doc.firstName,
+          lastName: doc.lastName,
+          specialization: doc.specialization || [],
+          experience: doc.experience,
+          certifications: doc.certifications || [],
+          bio: doc.bio,
+          availableTimes: doc.availableTimes || [],
+          profileImage: doc.profileImage,
+          workImages: doc.workImages || [],
+          services: doc.services || [],
+        }
       }));
       setDoctors(mapped);
     } catch (err) {
       console.error("Error fetching doctors", err);
+      toast.error("Failed to fetch doctors");
     }
   };
-  let DeleteById = async (id) => {
+
+  const DeleteById = async (id) => {
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`/doctor/${id}`, {
+      await axios.delete(`/dashboard/doctors/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
       setDoctors((prev) => prev.filter((doctor) => doctor._id !== id));
-      toast.success("doctor deleted successfully");
+      toast.success("Doctor deleted successfully");
     } catch {
       toast.error("Failed to delete doctor");
     }
   };
 
   const handleEdit = (doctor) => {
-    setSelectedDoctor(doctor);
+setSelectedDoctor({
+      _id: doctor._id,
+      firstName: doctor.firstName,
+      lastName: doctor.lastName,
+      specialization: doctor.originalData?.specialization || [],
+      experience: doctor.experience,
+      certifications: doctor.originalData?.certifications || [],
+      bio: doctor.bio,
+      availableTimes: doctor.originalData?.availableTimes || [],
+      profileImage: doctor.profileImage,
+      workImages: doctor.originalData?.workImages || [],
+      services: doctor.servicesArray?.map(s => s._id || s) || [],
+    });
     setIsEdit(true);
     setOpen(true);
   };
 
   useEffect(() => {
-    getallDoctors();
+    getAllDoctors();
   }, []);
+
   return (
     <>
       <main className="h-full overflow-y-auto bg-white">
@@ -92,7 +120,7 @@ const Doctors = () => {
                 setSelectedDoctor(null);
               }}
               onSuccess={() => {
-                getallDoctors();
+                getAllDoctors();
                 setOpen(false);
                 setIsEdit(false);
                 setSelectedDoctor(null);

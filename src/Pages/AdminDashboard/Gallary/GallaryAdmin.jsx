@@ -6,7 +6,6 @@ import PopupsAddGallary from "../../../components/Popups/PopupsAddGallary";
 
 const columns = [
   { label: "Image", key: "imageUrl", minWidth: 150 },
-  { label: "ID", key: "_id", minWidth: 200 },
   { label: "Public ID", key: "publicId", minWidth: 200 },
   { label: "Actions", key: "actions", minWidth: 100, align: "right" },
 ];

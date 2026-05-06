@@ -16,37 +16,26 @@ export function SignIn() {
 
   const [formErrors, setFormErrors] = useState({});
   const [serverError, setServerError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-
-    if (formErrors[name] && value.trim().length > 0) {
-      setFormErrors((prev) => ({ ...prev, [name]: "" }));
-    }
     setServerError("");
-  };
-
-  const handleBlur = (field) => {
-    const errors = validateForm();
-    if (errors[field]) {
-      setFormErrors((prev) => ({ ...prev, [field]: errors[field] }));
-    }
   };
 
   const validateForm = () => {
     const errors = {};
     if (!formData.email.trim()) {
-      errors.email = true;
+      errors.email = "Email is required";
+    } else if (!/^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/.test(formData.email)) {
+      errors.email = "Email must be valid (e.g. user@example.com)";
     }
+
     if (!formData.password.trim()) {
-      errors.password = true;
+      errors.password = "Password is required";
     }
     return errors;
-  };
-
-  const handleCheck = () => {
-    return !formData.email.trim() || !formData.password.trim();
   };
 
   const handleSubmit = async (e) => {
@@ -75,8 +64,22 @@ export function SignIn() {
       }, 3000);
     } catch (err) {
       toast.error("login failed");
-      const msg = err.response?.data?.message || "Login failed";
+      const data = err.response?.data;
+      const msg = data?.message || "Login failed";
       setServerError(msg);
+
+      if (Array.isArray(data?.errors)) {
+        const fieldErrors = {};
+        data.errors.forEach((msg) => {
+          const lower = msg.toLowerCase();
+          if (lower.includes("email")) {
+            fieldErrors.email = msg;
+          } else if (lower.includes("password")) {
+            fieldErrors.password = msg;
+          }
+        });
+        setFormErrors(fieldErrors);
+      }
     }
   };
 
@@ -109,7 +112,6 @@ export function SignIn() {
                   className={`_Email ${formErrors.email ? "input-error" : ""}`}
                   value={formData.email}
                   onChange={handleChange}
-                  onBlur={() => handleBlur("email")}
                 />
               </div>
               {formErrors.email && (
@@ -125,9 +127,9 @@ export function SignIn() {
             </div>
 
             <div className="_field create-password">
-              <div className="_inputField">
+              <div className="_inputField" style={{ position: "relative" }}>
                 <input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   name="password"
                   placeholder="Password"
                   className={`_Password ${
@@ -135,8 +137,22 @@ export function SignIn() {
                   }`}
                   value={formData.password}
                   onChange={handleChange}
-                  onBlur={() => handleBlur("password")}
+                  style={{ paddingRight: "40px" }}
                 />
+                <i
+                  className={`bx ${showPassword ? "bx-show" : "bx-hide"}`}
+                  onClick={() => setShowPassword(!showPassword)}
+                  style={{
+                    position: "absolute",
+                    right: "15px",
+                    top: "50%",
+                    transform: "translateY(-50%)",
+                    cursor: "pointer",
+                    fontSize: "20px",
+                    color: "#707070",
+                    zIndex: 10,
+                  }}
+                ></i>
               </div>
               {formErrors.password && (
                 <span className="_error password-error">
@@ -158,7 +174,7 @@ export function SignIn() {
             )}
 
             <div className="_inputField _button">
-              <ButtonSubmit name={"Sign In"} disabled={handleCheck()} />
+              <ButtonSubmit name={"Sign In"} />
             </div>
 
             <div className="_Link">

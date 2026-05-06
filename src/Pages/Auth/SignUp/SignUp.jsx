@@ -18,55 +18,47 @@ export function SignUp() {
 
   const [formErrors, setFormErrors] = useState({});
   const [serverError, setServerError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-
-    if (value.trim().length > 0 && formErrors[name]) {
-      setFormErrors((prev) => ({ ...prev, [name]: "" }));
-    }
-  };
-
-  const handleBlur = (field) => {
-    const errors = validateForm();
-    if (errors[field]) {
-      setFormErrors((prev) => ({ ...prev, [field]: errors[field] }));
-    }
   };
 
   const validateForm = () => {
     const errors = {};
 
     if (!formData.firstName.trim()) {
-      errors.firstName = true;
+      errors.firstName = "First name is required";
     }
     if (!formData.lastName.trim()) {
-      errors.lastName = true;
+      errors.lastName = "Last name is required";
     }
     if (!formData.email.trim()) {
-      errors.email = true;
+      errors.email = "Email is required";
+    } else if (!/^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/.test(formData.email)) {
+      errors.email = "Email must be valid (e.g. user@example.com)";
     }
+
     if (!formData.password.trim()) {
-      errors.password = true;
+      errors.password = "Password is required";
+    } else if (formData.password.length < 8) {
+      errors.password = "Password must be at least 8 characters";
+    } else if (
+      !/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])/.test(formData.password)
+    ) {
+      errors.password =
+        "Password must contain uppercase, lowercase, number and special character";
     }
+
     if (!formData.confirmPassword.trim()) {
-      errors.confirmPassword = true;
+      errors.confirmPassword = "Confirm password is required";
     } else if (formData.password !== formData.confirmPassword) {
       errors.confirmPassword = "Passwords do not match";
     }
 
     return errors;
-  };
-
-  const handleCheck = () => {
-    return (
-      !formData.firstName.trim() ||
-      !formData.lastName.trim() ||
-      !formData.email.trim() ||
-      !formData.password.trim() ||
-      !formData.confirmPassword.trim()
-    );
   };
 
   const handleSubmit = async (e) => {
@@ -81,25 +73,26 @@ export function SignUp() {
     }
 
     try {
-      await axios.post("/auth/register", {
+      const res = await axios.post("/auth/register", {
         firstName: formData.firstName,
         lastName: formData.lastName,
         email: formData.email,
         password: formData.password,
       });
 
+      const { token, user } = res.data;
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user));
+
       toast.success("Account Created Successfully");
       setTimeout(() => {
-        navigate("/login");
-      }, 3000);
+        navigate("/");
+      }, 2000);
     } catch (err) {
-      toast.error("Feild Account Create ");
-
       const data = err.response?.data;
-
-      if (data?.message) {
-        setServerError(data.message);
-      }
+      const errorMessage = data?.message || "Failed to create account";
+      toast.error(errorMessage);
+      setServerError(errorMessage);
 
       if (Array.isArray(data?.errors)) {
         const fieldErrors = {};
@@ -115,8 +108,6 @@ export function SignUp() {
             fieldErrors.password = msg;
           } else if (lower.includes("confirm")) {
             fieldErrors.confirmPassword = msg;
-          } else {
-            setServerError(msg);
           }
         });
         setFormErrors(fieldErrors);
@@ -157,7 +148,6 @@ export function SignUp() {
                   }`}
                   value={formData.firstName}
                   onChange={handleChange}
-                  onBlur={() => handleBlur("firstName")}
                 />
                 {formErrors.firstName && (
                   <span className="_error password-error">
@@ -182,7 +172,6 @@ export function SignUp() {
                   }`}
                   value={formData.lastName}
                   onChange={handleChange}
-                  onBlur={() => handleBlur("lastName")}
                 />
                 {formErrors.lastName && (
                   <span className="_error password-error">
@@ -205,7 +194,6 @@ export function SignUp() {
                   className={`_Email ${formErrors.email ? "input-error" : ""}`}
                   value={formData.email}
                   onChange={handleChange}
-                  onBlur={() => handleBlur("email")}
                 />
               </div>{" "}
               {formErrors.email && (
@@ -220,9 +208,9 @@ export function SignUp() {
               )}
             </div>
             <div className="_field create-password">
-              <div className="_inputField">
+              <div className="_inputField" style={{ position: "relative" }}>
                 <input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   name="password"
                   placeholder="Create password"
                   className={`_Password ${
@@ -230,8 +218,22 @@ export function SignUp() {
                   }`}
                   value={formData.password}
                   onChange={handleChange}
-                  onBlur={() => handleBlur("password")}
+                  style={{ paddingRight: "40px" }}
                 />
+                <i
+                  className={`bx ${showPassword ? "bx-show" : "bx-hide"}`}
+                  onClick={() => setShowPassword(!showPassword)}
+                  style={{
+                    position: "absolute",
+                    right: "15px",
+                    top: "50%",
+                    transform: "translateY(-50%)",
+                    cursor: "pointer",
+                    fontSize: "20px",
+                    color: "#707070",
+                    zIndex: 10,
+                  }}
+                ></i>
               </div>{" "}
               {formErrors.password && (
                 <span className="_error password-error">
@@ -245,18 +247,32 @@ export function SignUp() {
               )}
             </div>
             <div className="_field confirm-password">
-              <div className="_inputField">
+              <div className="_inputField" style={{ position: "relative" }}>
                 <input
-                  type="password"
+                  type={showConfirmPassword ? "text" : "password"}
                   placeholder="Confirm password"
                   className={`_confiermPassword ${
                     formErrors.confirmPassword ? "input-error" : ""
                   }`}
                   value={formData.confirmPassword}
                   onChange={handleChange}
-                  onBlur={() => handleBlur("confirmPassword")}
                   name="confirmPassword"
+                  style={{ paddingRight: "40px" }}
                 />
+                <i
+                  className={`bx ${showConfirmPassword ? "bx-show" : "bx-hide"}`}
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  style={{
+                    position: "absolute",
+                    right: "15px",
+                    top: "50%",
+                    transform: "translateY(-50%)",
+                    cursor: "pointer",
+                    fontSize: "20px",
+                    color: "#707070",
+                    zIndex: 10,
+                  }}
+                ></i>
               </div>{" "}
               {formErrors.confirmPassword && (
                 <span className="_error password-error">
@@ -271,7 +287,7 @@ export function SignUp() {
             </div>
             {serverError && <p className="error-text">{serverError}</p>}
             <div className="_inputField _button">
-              <ButtonSubmit name={"Sign Up"} disabled={handleCheck()} />
+              <ButtonSubmit name={"Sign Up"} />
             </div>
             <div className="_Link">
               <Link id="_GoToLogin" to="/login">

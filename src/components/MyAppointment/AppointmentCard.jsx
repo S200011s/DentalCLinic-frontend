@@ -190,14 +190,26 @@ const AppointmentCard = ({ appointment, onCancel }) => {
 
             <InfoSection>
               <DateTimeInfo variant="body2">
-                📅 {format(new Date(date), "EEEE, MMMM d, yyyy")}
+                📅 {(() => {
+                  try {
+                    return format(new Date(date), "EEEE, MMMM d, yyyy");
+                  } catch (e) {
+                    return "Date not available";
+                  }
+                })()}
               </DateTimeInfo>
               <DateTimeInfo variant="body2" sx={{ mt: 0.5 }}>
-                🕐 {format(new Date(startTime), "h:mm a")} - {format(new Date(endTime), "h:mm a")}
+                🕐 {(() => {
+                  try {
+                    return `${format(new Date(startTime), "h:mm a")} - ${format(new Date(endTime), "h:mm a")}`;
+                  } catch (e) {
+                    return "Time not available";
+                  }
+                })()}
               </DateTimeInfo>
               {service?.price && (
                 <DateTimeInfo variant="body2" sx={{ mt: 0.5 }}>
-                  💰 Appointment Fee: ${service.price}
+                  💰 Appointment Fee: {service.price} EGP
                 </DateTimeInfo>
               )}
             </InfoSection>

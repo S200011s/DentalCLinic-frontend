@@ -27,7 +27,7 @@ const ServiceSelect = ({ selectedService, setSelectedService }) => {
       <InputLabel id="service-label">Service</InputLabel>
       <Select
         labelId="service-label"
-        value={selectedService || ""} // This correctly binds the selected value
+        value={services.some(s => s._id === selectedService) ? selectedService : ""} // ✅ FIX: Prevents out-of-range warning during loading
         label="Service"
         onChange={handleChange}
       >

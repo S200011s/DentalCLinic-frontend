@@ -45,7 +45,7 @@ const DoctorSelect = ({
     <FormControl fullWidth margin="normal" disabled={!selectedService || doctors.length === 0}>
       <InputLabel>Doctor</InputLabel>
       <Select
-        value={selectedDoctor || ""} // Use || "" to prevent warnings
+        value={doctors.some(d => d._id === selectedDoctor) ? selectedDoctor : ""} // ✅ FIX: Prevents out-of-range warning during loading
         label="Doctor"
         onChange={(e) => setSelectedDoctor(e.target.value)}
       >

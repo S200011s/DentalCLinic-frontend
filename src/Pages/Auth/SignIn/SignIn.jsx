@@ -60,8 +60,14 @@ export function SignIn() {
 
       toast.success("login successfully");
       setTimeout(() => {
-        navigate("/");
-      }, 3000);
+        if (user.role === "admin") {
+          navigate("/layout");
+        } else if (user.role === "doctor") {
+          navigate("/doctor/appointments");
+        } else {
+          navigate("/");
+        }
+      }, 2000);
     } catch (err) {
       toast.error("login failed");
       const data = err.response?.data;

@@ -91,6 +91,8 @@ const StatusChip = styled(Chip)(({ theme, status }) => {
         return { bg: '#bee3f8', color: '#2a4365', border: '#90cdf4' };
       case 'no-show':
         return { bg: '#e2e8f0', color: '#4a5568', border: '#cbd5e0' };
+      case 'rescheduled':
+        return { bg: '#e9d8fd', color: '#44337a', border: '#b794f4' };
       default:
         return { bg: '#f7fafc', color: '#4a5568', border: '#e2e8f0' };
     }
@@ -296,11 +298,11 @@ const Appointments = () => {
       case 'confirm':
         return status === 'pending';
       case 'cancel':
-        return ['pending', 'confirmed'].includes(status);
+        return ['pending', 'confirmed', 'rescheduled'].includes(status);
       case 'reschedule':
-        return ['pending', 'confirmed'].includes(status);
+        return ['pending', 'confirmed', 'rescheduled'].includes(status);
       case 'delay':
-        return status === 'confirmed';
+        return ['confirmed', 'rescheduled'].includes(status);
       case 'noshow':
         return status === 'completed';
       default:
@@ -319,7 +321,8 @@ const Appointments = () => {
     confirmed: "✅ Confirmed",
     completed: "🎉 Completed",
     cancelled: "❌ Cancelled",
-    "no-show": "🚫 No Show"
+    "no-show": "🚫 No Show",
+    rescheduled: "📅 Rescheduled"
   };
 
   if (loading) {

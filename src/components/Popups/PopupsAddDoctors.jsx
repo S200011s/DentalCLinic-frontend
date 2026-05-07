@@ -56,6 +56,8 @@ function PopupsAddDoctors({
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
+    email: "",
+    password: "",
     specialization: [],
     experience: "",
     certifications: [],
@@ -216,6 +218,10 @@ const handleSubmit = async (e) => {
 
     formDataToSend.append("firstName", formData.firstName.trim());
     formDataToSend.append("lastName", formData.lastName.trim());
+    if (!isEdit) {
+      formDataToSend.append("email", formData.email.trim());
+      formDataToSend.append("password", formData.password);
+    }
     formDataToSend.append("experience", String(formData.experience));
     formDataToSend.append("bio", formData.bio.trim());
 
@@ -314,6 +320,8 @@ const handleSubmit = async (e) => {
     setFormData({
       firstName: "",
       lastName: "",
+      email: "",
+      password: "",
       specialization: [],
       experience: "",
       certifications: [],
@@ -404,6 +412,33 @@ const handleSubmit = async (e) => {
                 />
               </Grid>
             </Grid>
+
+            {!isEdit && (
+              <Grid container spacing={2}>
+                <Grid size={{ xs: 12, sm: 6 }}>
+                  <TextField
+                    label="Email Address"
+                    name="email"
+                    type="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    fullWidth
+                  />
+                </Grid>
+                <Grid size={{ xs: 12, sm: 6 }}>
+                  <TextField
+                    label="Login Password"
+                    name="password"
+                    type="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    required
+                    fullWidth
+                  />
+                </Grid>
+              </Grid>
+            )}
 
             <FormControl fullWidth required>
               <InputLabel>Specializations</InputLabel>

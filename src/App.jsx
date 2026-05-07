@@ -16,6 +16,7 @@ import Categories from "./Pages/AdminDashboard/Categories/Categories";
 import Appointments from "./Pages/AdminDashboard/Appointments/Appointments";
 import ClinicReviews from "./Pages/AdminDashboard/ClinicReviews/ClinicReviews";
 import DoctorsReviews from "./Pages/AdminDashboard/DoctorsReviews/DoctorsReviews";
+import DoctorAppointments from "./Pages/DoctorDashboard/DoctorAppointments";
 import RoleProtectedRoute from "./guards/RoleProtectedRoute";
 import Unauthorized from "./Pages/RolesPages/Unauthorized";
 import Notfound from "./Pages/RolesPages/Notfound";
@@ -95,6 +96,10 @@ function App() {
             <Route path="doctor-reviews" element={<DoctorsReviews />} />
           </Route>
         </Route>
+        <Route element={<RoleProtectedRoute allowedRoles={["doctor"]} />}>
+          <Route path="/doctor/appointments" element={<DoctorAppointments />} />
+        </Route>
+
         <Route
           element={
             <RoleProtectedRoute allowedRoles={["client", "doctor", "admin"]} />

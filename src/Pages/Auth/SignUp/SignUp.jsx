@@ -86,7 +86,13 @@ export function SignUp() {
 
       toast.success("Account Created Successfully");
       setTimeout(() => {
-        navigate("/");
+        if (user.role === "admin") {
+          navigate("/layout");
+        } else if (user.role === "doctor") {
+          navigate("/doctor/appointments");
+        } else {
+          navigate("/");
+        }
       }, 2000);
     } catch (err) {
       const data = err.response?.data;

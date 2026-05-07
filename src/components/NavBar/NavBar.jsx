@@ -104,6 +104,7 @@ const NavBar = () => {
             {isAuth() ? (
               <DropdownList
                 element={<FaRegCircleUser />}
+                user={JSON.parse(localStorage.getItem("user"))}
                 items={["Profile", "My Appoitments", "Dashboard"]}
               />
             ) : (

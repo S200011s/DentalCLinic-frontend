@@ -27,9 +27,9 @@ import ServicesDetails from "./Pages/Services/ServiceDetails";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AboutUs from "./Pages/AboutUs/AboutUs";
-import Gallary from "./Pages/Gallary/Gallary";
+import Gallery from "./Pages/Gallery/Gallery";
 import ContactUs from "./Pages/ContactUs/ContactUs";
-import GalleryAdmin from "./Pages/AdminDashboard/Gallary/GallaryAdmin";
+import GalleryAdmin from "./Pages/AdminDashboard/Gallery/GalleryAdmin";
 import Profile from "./Pages/Profiles/Profile";
 import Information from "./Pages/Profiles/Information/Information";
 
@@ -54,7 +54,7 @@ function App() {
     "/layout/appointments",
     "/layout/clinic-reviews",
     "/layout/doctor-reviews",
-    "/layout/gallaryadmin",
+    "/layout/Galleryadmin",
     "/profile/appointments",
     "/profile/services",
     "/profile/information",
@@ -70,7 +70,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/aboutus" element={<AboutUs />} />
-        <Route path="/gallary" element={<Gallary />} />
+        <Route path="/gallery" element={<Gallery />} />
         <Route path="/contactus" element={<ContactUs />} />
         <Route path="/login" element={<SignIn />} />
         <Route path="/register" element={<SignUp />} />
@@ -89,7 +89,7 @@ function App() {
             <Route path="clinets" element={<Clients />} />
             <Route path="doctors" element={<Doctors />} />
             <Route path="services" element={<Services />} />
-            <Route path="gallaryadmin" element={<GalleryAdmin />} />
+            <Route path="galleryadmin" element={<GalleryAdmin />} />
             <Route path="categories" element={<Categories />} />
             <Route path="appointments" element={<Appointments />} />
             <Route path="clinic-reviews" element={<ClinicReviews />} />

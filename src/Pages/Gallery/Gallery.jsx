@@ -2,9 +2,9 @@ import "../AboutUs/AboutUs.css";
 import { IoIosArrowForward } from "react-icons/io";
 import AOS from "aos";
 import { useEffect } from "react";
-import GallaryCards from "../../components/GallaryCards/GallaryCards";
+import GalleryCards from "../../components/GalleryCards/GalleryCards";
 
-const Gallary = () => {
+const gallery = () => {
   useEffect(() => {
     AOS.init({
       duration: 1000,
@@ -18,7 +18,7 @@ const Gallary = () => {
           <div className="_About-Header">
             <div className="_AboutContainerHeader">
               <div className="_Title" data-aos="fade-down" data-aos-delay="200">
-                <span>Gallary</span>
+                <span>gallery</span>
               </div>
               <div
                 className="_Title _titleUinqe"
@@ -27,16 +27,16 @@ const Gallary = () => {
               >
                 <p className="_PageName">
                   Home
-                  <IoIosArrowForward /> Gallary
+                  <IoIosArrowForward /> gallery
                 </p>
               </div>
             </div>
           </div>
         </div>
-        <GallaryCards />
+        <GalleryCards />
       </div>
     </>
   );
 };
 
-export default Gallary;
+export default gallery;

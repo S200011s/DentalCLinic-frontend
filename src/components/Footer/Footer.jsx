@@ -49,11 +49,11 @@ const Footer = () => {
 
                   <li>
                     <Link
-                      to="/gallary"
+                      to="/gallery"
                       className="text-gray-700 transition hover:opacity-75"
                     >
                       {" "}
-                      Gallary
+                      Gallery
                     </Link>
                   </li>
 

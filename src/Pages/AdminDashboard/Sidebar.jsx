@@ -112,8 +112,8 @@ const SidebarContent = ({ closeSideMenu }) => (
       />
       <SidebarItem
         icon={<HiOutlinePhoto />}
-        label="Gallary"
-        to="/layout/gallaryadmin"
+        label="Gallery"
+        to="/layout/Galleryadmin"
         closeSideMenu={closeSideMenu}
       />
       <SidebarItem

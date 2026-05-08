@@ -2,17 +2,18 @@ import { useEffect, useState } from "react";
 import axios from "../../../api/axiosInstance";
 import { toast, ToastContainer } from "react-toastify";
 import AdminTables from "../AdminTables";
-import PopupsAddGallary from "../../../components/Popups/PopupsAddGallary";
+import PopupsAddGallery from "../../../components/Popups/PopupsAddGallery";
 
 const columns = [
   { label: "Image", key: "imageUrl", minWidth: 150 },
-  { label: "Public ID", key: "publicId", minWidth: 200 },
   { label: "Actions", key: "actions", minWidth: 100, align: "right" },
 ];
 
 const GalleryAdmin = () => {
   const [rows, setRows] = useState([]);
   const [open, setOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [isEdit, setIsEdit] = useState(false);
 
   const getAllImages = async () => {
     try {
@@ -32,10 +33,8 @@ const GalleryAdmin = () => {
   const DeleteById = async (id) => {
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`/gallery/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+      await axios.delete(`dashboard/gallery/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
       });
       setRows((prev) => prev.filter((img) => img._id !== id));
       toast.success("Image deleted successfully");
@@ -43,6 +42,12 @@ const GalleryAdmin = () => {
       toast.error("Failed to delete image");
       console.error(err);
     }
+  };
+
+  const handleEdit = (image) => {
+    setSelectedImage(image);
+    setIsEdit(true);
+    setOpen(true);
   };
 
   useEffect(() => {
@@ -53,20 +58,25 @@ const GalleryAdmin = () => {
     <main className="h-full overflow-y-auto bg-white">
       <ToastContainer position="top-right" autoClose={3000} />
       <div className="container px-6 mx-auto grid">
-        <h2
-          className="my-6 text-2xl font-semibold"
-          style={{ color: "#10244b" }}
-        >
+        <h2 className="my-6 text-2xl font-semibold" style={{ color: "#10244b" }}>
           Gallery
         </h2>
-        <div className="mb-6 flex justify-end " style={{ width: "100%" }}>
-          <PopupsAddGallary
+        <div className="mb-6 flex justify-end" style={{ width: "100%" }}>
+          <PopupsAddGallery
             open={open}
             setOpen={setOpen}
-            onClose={() => setOpen(false)}
+            isEdit={isEdit}
+            imageData={selectedImage}
+            onClose={() => {
+              setOpen(false);
+              setIsEdit(false);
+              setSelectedImage(null);
+            }}
             onSuccess={() => {
               getAllImages();
               setOpen(false);
+              setIsEdit(false);
+              setSelectedImage(null);
             }}
           />
         </div>
@@ -75,7 +85,8 @@ const GalleryAdmin = () => {
             columns={columns}
             rows={rows}
             DeleteById={DeleteById}
-            showEdit={false}
+            onEdit={handleEdit}
+            showEdit={true}
           />
         </div>
       </div>

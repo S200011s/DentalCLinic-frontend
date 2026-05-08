@@ -138,8 +138,8 @@ const NavBar = () => {
                 </Link>
               </li>
               <li onClick={afterClicked}>
-                <Link to="/gallary" className="block py-2 pl-3 pr-4 ">
-                  Gallary
+                <Link to="/gallery" className="block py-2 pl-3 pr-4 ">
+                  Gallery
                 </Link>
               </li>
               <li onClick={afterClicked}>

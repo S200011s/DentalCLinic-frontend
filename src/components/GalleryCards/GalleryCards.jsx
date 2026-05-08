@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import "./GallaryCards.css";
+import "./GalleryCards.css";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import axios from "../../api/axiosInstance";
 
-const GallaryCards = () => {
+const GalleryCards = () => {
   const [images, setImages] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
 
@@ -54,4 +54,4 @@ const GallaryCards = () => {
   );
 };
 
-export default GallaryCards;
+export default GalleryCards;

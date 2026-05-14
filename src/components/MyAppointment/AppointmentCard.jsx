@@ -135,7 +135,13 @@ const InfoSection = styled(Box)(({ theme }) => ({
   marginTop: theme.spacing(2),
 }));
 
-const AppointmentCard = ({ appointment, onCancel }) => {
+// const AppointmentCard = ({ appointment, onCancel }) => {
+  const AppointmentCard = ({
+  appointment,
+  onCancel,
+  onPay,
+  reviewButton
+}) => {
   const {
     doctor,
     service,
@@ -241,6 +247,11 @@ const AppointmentCard = ({ appointment, onCancel }) => {
                 Cancel
               </ActionButton>
             )}
+            {reviewButton && (
+            <Box className="mt-2">
+          {reviewButton}
+          </Box>
+          )}
           </Stack>
         </Stack>
       </CardContent>

@@ -72,6 +72,7 @@ function PopupsAddServices({
 
   useEffect(() => {
     if (isEdit && serviceData) {
+
       setFormData({
         name: serviceData.name || "",
         description: serviceData.description || "",
@@ -178,6 +179,9 @@ function PopupsAddServices({
     
     try {
       const token = localStorage.getItem("token");
+      console.log(formData.name);
+  console.log(typeof formData.name);
+
       const formDataToSend = new FormData();
 
       formDataToSend.append("name", formData.name);
@@ -191,9 +195,7 @@ function PopupsAddServices({
       }
       
       if (formData.doctors && formData.doctors.length > 0) {
-        formData.doctors.forEach((doctorId) => {
-          formDataToSend.append("doctors", doctorId);
-        });
+        formDataToSend.append("doctors", JSON.stringify(formData.doctors));
       }
 
       if (formData.image) {

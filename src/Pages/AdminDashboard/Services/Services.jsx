@@ -48,12 +48,21 @@ const Services = () => {
       toast.error("Failed to delete service");
     }
   };
-  const handleEdit = (service) => {
-    setSelectedService(service);
-    setIsEdit(true);
-    setOpen(true);
-  };
+//   const handleEdit = async (service) => {
+//   const { data } = await axios.get(`/services/${service._id}`);
+//   setSelectedService(data);
+//   setIsEdit(true);
+//   setOpen(true);
+// };
 
+
+const handleEdit = async (service) => {
+  const { data } = await axios.get(`/services/${service._id}`);
+
+  setSelectedService(data);
+  setIsEdit(true);
+  setOpen(true);
+};
   useEffect(() => {
     getAllServices();
   }, []);

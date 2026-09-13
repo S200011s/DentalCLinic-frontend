@@ -6,6 +6,9 @@ import ButtonSubmit from "../Buttons/ButtonSubmit";
 import { Link } from "react-router";
 import LogOut from "../../Pages/Auth/LogOut";
 import isAuth from "../../guards/isAuth";
+import whiteLogo from "../../assets/images/logo/logo-white.webp"
+import blackLogo from "../../assets/images/logo/logo-black.webp"
+
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -42,13 +45,13 @@ const NavBar = () => {
           <Link to={"/"} className="flex items-center border-0">
             {icon ? (
               <img
-                src="/src/assets/images/logo/logo-white.webp"
+                src={whiteLogo}
                 className="h-6 mr-3 sm:h-9"
                 alt="Logo"
               />
             ) : (
               <img
-                src="/src/assets/images/logo/logo-black.webp"
+                src={blackLogo}
                 className="h-6 mr-3 sm:h-9"
                 alt="Logo"
               />

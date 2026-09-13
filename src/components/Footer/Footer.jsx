@@ -5,6 +5,7 @@ import "./Footer.css";
 import { BsTelephoneFill } from "react-icons/bs";
 import { FaLocationDot } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
+import logo from "../../assets/images/logo/logo-white.webp"
 
 const Footer = () => {
   return (
@@ -15,7 +16,7 @@ const Footer = () => {
             <div className="mt-8 grid grid-cols-2 gap-10 lg:mt-0 lg:grid-cols-5 lg:gap-y-16 py-10">
               <div className="col-span-2">
                 <div>
-                  <img src="/src/assets/images/logo/logo-white.webp" />
+                  <img src={logo} />
                   <p className="mt-6 _TextColor">
                     At Dentia, we’re dedicated to providing high-quality,
                     personalized dental care for patients of all ages. Our

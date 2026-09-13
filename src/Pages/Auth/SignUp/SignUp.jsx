@@ -6,6 +6,8 @@ import axios from "../../../api/axiosInstance";
 import { Link, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import c2 from "../../../assets/images/c2.webp"
+
 export function SignUp() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -127,7 +129,7 @@ export function SignUp() {
         <ToastContainer position="top-right" autoClose={2000} />
         <div className="_image">
           <div className="_Ima">
-            <img src="/src/assets/images/c2.webp" alt="teeth image" />
+            <img src={c2} alt="teeth image" />
           </div>
           <div className="_Title">
             <h3>Create your account</h3>

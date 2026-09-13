@@ -4,6 +4,7 @@ import "boxicons/css/boxicons.min.css";
 import ButtonSubmit from "../../../components/Buttons/ButtonSubmit";
 import { Link, useNavigate } from "react-router";
 import axios from "../../../api/axiosInstance";
+import c2 from "../../../assets/images/c2.webp"
 
 export function ForgetPassword() {
   const navigate = useNavigate();
@@ -41,7 +42,8 @@ export function ForgetPassword() {
       <div className="_Container">
         <div className="_image">
           <div className="_Ima">
-            <img src="/src/assets/images/c2.webp" alt="teeth image" />
+            <img src={c2}
+            alt="teeth image" />
           </div>
           <div className="_Title">
             <h3>Password Recovery</h3>

@@ -13,6 +13,7 @@ import {
 } from "react-icons/hi2";
 import ButtonSubmit from "../../components/Buttons/ButtonSubmit";
 import { CiLogout } from "react-icons/ci";
+import logo from "../../assets/images/logo/logo-white.webp"
 
 const Sidebar = ({ isSideMenuOpen, closeSideMenu }) => {
   const [isPagesMenuOpen, setPagesMenuOpen] = useState(false);
@@ -77,7 +78,7 @@ const Sidebar = ({ isSideMenuOpen, closeSideMenu }) => {
 const SidebarContent = ({ closeSideMenu }) => (
   <div className="py-4 text-gray-500 dark:text-gray-400">
     <img
-      src="/src/assets/images/logo/logo-white.webp"
+      src={logo}
       alt=""
       style={{ width: "10rem" }}
       className=" ml-6"

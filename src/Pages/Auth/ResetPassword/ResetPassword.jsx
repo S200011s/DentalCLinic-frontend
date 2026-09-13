@@ -5,6 +5,7 @@ import "boxicons/css/boxicons.min.css";
 import ButtonSubmit from "../../../components/Buttons/ButtonSubmit";
 import { MdOutlinePassword } from "react-icons/md";
 import axios from "../../../api/axiosInstance";
+import c2 from "../../../assets/images/c2.webp"
 
 export function ResetPassword() {
   const { token } = useParams();
@@ -86,7 +87,8 @@ export function ResetPassword() {
       <div className="_Container">
         <div className="_image">
           <div className="_Ima">
-            <img src="/src/assets/images/c2.webp" alt="teeth image" />
+            <img src={c2} 
+            alt="teeth image" />
           </div>
           <div className="_Title">
             <h3>Reset Password</h3>

@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "../../../api/axiosInstance";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import c2 from "../../../assets/images/c2.webp"
 export function SignIn() {
   const navigate = useNavigate();
 
@@ -96,7 +97,8 @@ export function SignIn() {
 
         <div className="_image">
           <div className="_Ima">
-            <img src="/src/assets/images/c2.webp" alt="teeth image" />
+            <img src={c2}
+            alt="teeth image" />
           </div>
           <div className="_Title">
             <h3>Welcome Back</h3>

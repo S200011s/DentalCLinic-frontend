@@ -2,6 +2,10 @@ import { useEffect } from "react";
 import "../../Pages/Home/Home.css";
 import ScrollCounter from "../../components/ScrollCounter/ScrollCounter";
 import AOS from "aos";
+import img1 from "../../assets/images/Doctors/1.webp"
+import img2 from "../../assets/images/Doctors/2.webp"
+import img3 from "../../assets/images/Doctors/3.webp"
+import img4 from "../../assets/images/Doctors/4.webp"
 
 const Categories = () => {
   useEffect(() => {
@@ -29,7 +33,7 @@ const Categories = () => {
           <div className="_OurCategories">
             <div className="_OneCard" data-aos="zoom-in" data-aos-delay="200">
               <img
-                src="/src/assets/images/Doctors/1.webp"
+                src={img1}
                 alt="dessert-bloom image"
               />
               <p>
@@ -39,7 +43,7 @@ const Categories = () => {
             </div>
             <div className="_OneCard" data-aos="zoom-in" data-aos-delay="200">
               <img
-                src="/src/assets/images/Doctors/2.webp"
+                src={img2}
                 alt="dessert-bloom image"
               />
               <p>
@@ -49,7 +53,7 @@ const Categories = () => {
             </div>
             <div className="_OneCard" data-aos="zoom-in" data-aos-delay="200">
               <img
-                src="/src/assets/images/Doctors/3.webp"
+                src={img3}
                 alt="dessert-bloom image"
               />
               <p>
@@ -59,7 +63,7 @@ const Categories = () => {
             </div>
             <div className="_OneCard" data-aos="zoom-in" data-aos-delay="200">
               <img
-                src="/src/assets/images/Doctors/4.webp"
+                src={img4}
                 alt="dessert-bloom image"
               />
               <p>

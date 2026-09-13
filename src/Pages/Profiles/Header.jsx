@@ -4,6 +4,7 @@ import { FiMenu } from "react-icons/fi";
 import { Link } from "react-router";
 import LogOut from "../Auth/LogOut";
 import { HiOutlineHome } from "react-icons/hi2";
+import img1 from "../../assets/images/Doctors/1.webp"
 
 const Header = ({ onToggleSidebar }) => {
   const [isProfileMenuOpen, setProfileMenuOpen] = useState(false);
@@ -31,7 +32,7 @@ const Header = ({ onToggleSidebar }) => {
             >
               <img
                 className="object-cover w-8 h-8 rounded-full"
-                src="/src/assets/images/Doctors/1.webp"
+                src={img1}
                 alt="profile"
               />
             </button>

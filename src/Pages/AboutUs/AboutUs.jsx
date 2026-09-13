@@ -4,6 +4,9 @@ import { IoIosArrowForward } from "react-icons/io";
 import Categories from "../../components/Categories/Categories";
 import AOS from "aos";
 import { useEffect } from "react";
+import s3 from "../../assets/images/clients/s3.webp"
+import p3 from "../../assets/images/clients/p3.webp"
+
 
 function AboutUs() {
   useEffect(() => {
@@ -106,14 +109,14 @@ function AboutUs() {
             <div className="_statusImage order-1 md:order-none">
               <div className="_Image">
                 <img
-                  src="/src/assets/images/clients/s3.webp"
+                  src={s3}
                   alt="stats-count image"
                   data-aos="zoom-in"
                 />
               </div>
               <div className="_Image">
                 <img
-                  src="/src/assets/images/clients/p3.webp"
+                  src={p3}
                   alt="stats-count image"
                   data-aos="zoom-in"
                   className="_Unique"

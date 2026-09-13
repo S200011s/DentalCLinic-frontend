@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./NavBar.css";
 import { FaRegCircleUser } from "react-icons/fa6";
-import DropdownList from "../dropdownlist/DropdownList";
+import DropdownList from "../DropdownList/DropdownList";
 import ButtonSubmit from "../Buttons/ButtonSubmit";
 import { Link } from "react-router";
 import LogOut from "../../Pages/Auth/LogOut";

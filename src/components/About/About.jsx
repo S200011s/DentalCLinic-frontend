@@ -3,8 +3,8 @@ import "../../Pages/Home/Home.css";
 import ButtonSubmit from "../Buttons/ButtonSubmit";
 import AOS from "aos";
 import { Link } from "react-router";
-import p1 from "../../assets/images/clients/p1"
-import p2 from "../../assets/images/clients/p2"
+import p1 from "../../assets/images/clients/p1.webp"
+import p2 from "../../assets/images/clients/p2.webp"
 
 
 const About = () => {

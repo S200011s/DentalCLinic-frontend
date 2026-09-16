@@ -38,7 +38,7 @@ const DoctorList = () => {
   useEffect(() => {
     const fetchSpecializations = async () => {
       try {
-        const { data } = await axiosInstance.get("/doctor/specializations");
+        const { data } = await axiosInstance.get("/doctors/specializations");
         const dynamicOptions = Array.isArray(data)
           ? data.map((spec) => ({
               label: spec,
@@ -51,21 +51,21 @@ const DoctorList = () => {
         ]);
       } catch (err) {
         console.error("Error fetching specializations:", err);
-        try {
-          const { data } = await axiosInstance.get("/doctors/specializations");
-          const dynamicOptions = Array.isArray(data)
-            ? data.map((spec) => ({
-                label: spec,
-                value: spec,
-              }))
-            : [];
-          setSpecializationOptions([
-            { label: "All", value: "" },
-            ...dynamicOptions,
-          ]);
-        } catch (fallbackErr) {
-          console.error("Fallback also failed:", fallbackErr);
-        }
+    //     try {
+    //       const { data } = await axiosInstance.get("/doctors/specializations");
+    //       const dynamicOptions = Array.isArray(data)
+    //         ? data.map((spec) => ({
+    //             label: spec,
+    //             value: spec,
+    //           }))
+    //         : [];
+    //       setSpecializationOptions([
+    //         { label: "All", value: "" },
+    //         ...dynamicOptions,
+    //       ]);
+    //     } catch (fallbackErr) {
+    //       console.error("Fallback also failed:", fallbackErr);
+    //     }
       }
     };
 
@@ -107,16 +107,18 @@ const DoctorList = () => {
       query.append("page", page);
       query.append("limit", 8);
 
-      let response;
-      try {
-        response = await axiosInstance.get(`/doctor?${query.toString()}`);
-      } catch (err) {
-        if (err.response?.status === 404) {
-          response = await axiosInstance.get(`/doctors?${query.toString()}`);
-        } else {
-          throw err;
-        }
-      }
+      // let response;
+      // try {
+      //   response = await axiosInstance.get(`/doctors?${query.toString()}`);
+      // } catch (err) {
+      //   if (err.response?.status === 404) {
+      //     response = await axiosInstance.get(`/doctors?${query.toString()}`);
+      //   } else {
+      //     throw err;
+      //   }
+      // }
+
+      const response = await axiosInstance.get(`/doctors?${query.toString()}`);
       
       const doctorsData = response.data.doctors || response.data || [];
       setDoctors(doctorsData);

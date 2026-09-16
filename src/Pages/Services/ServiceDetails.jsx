@@ -4,80 +4,87 @@ import axiosInstance from "../../api/axiosInstance";
 import DoctorCard from "../../components/Doctors/DoctorsCard";
 import ButtonSubmit from "../../components/Buttons/ButtonSubmit";
 import AOS from "aos";
+import SlugPage from "../../components/SlugPage";
+import { slugify } from "../../utils/url";
+// const ServiceDetail = () => {
+//   const { id } = useParams();
+//   const navigate = useNavigate();
+//   const [service, setService] = useState(null);
+//   const [loading, setLoading] = useState(true);
+//   useEffect(() => {
+//     AOS.init({
+//       duration: 1000,
+//       once: true,
+//     });
+//   }, []);
+//   useEffect(() => {
+//     const fetchService = async () => {
+//       try {
+//         const res = await axiosInstance.get(`/services/${id}`);
+//         setService(res.data);
+//       } catch (error) {
+//         console.error("Error fetching service:", error);
+//       } finally {
+//         setLoading(false);
+//       }
+//     };
 
-const ServiceDetail = () => {
-  const { id } = useParams();
+//     fetchService();
+//   }, [id]);
+
+//   if (loading) {
+//     return (
+//       <div
+//         className="flex items-center justify-center py-20"
+//         style={{ backgroundColor: "#f8fafc", minHeight: "100vh" }}
+//       >
+//         <div className="text-center">
+//           <div className="w-16 h-16 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin mx-auto mb-4"></div>
+//           <p style={{ color: "#64748b" }}>Loading service details...</p>
+//         </div>
+//       </div>
+//     );
+//   }
+
+//   if (!service) {
+//     return (
+//       <div
+//         className="flex items-center justify-center py-20"
+//         style={{ backgroundColor: "#f8fafc", minHeight: "100vh" }}
+//       >
+//         <div className="text-center">
+//           <div
+//             className="w-24 h-24 mx-auto mb-6 rounded-full flex items-center justify-center"
+//             style={{ backgroundColor: "#fee2e2" }}
+//           >
+//             <svg
+//               className="w-12 h-12"
+//               style={{ color: "#dc2626" }}
+//               fill="none"
+//               stroke="currentColor"
+//               viewBox="0 0 24 24"
+//             >
+//               <path
+//                 strokeLinecap="round"
+//                 strokeLinejoin="round"
+//                 strokeWidth={2}
+//                 d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"
+//               />
+//             </svg>
+//           </div>
+//           <p className="text-lg font-medium" style={{ color: "#dc2626" }}>
+//             Service not found
+//           </p>
+//         </div>
+//       </div>
+//     );
+//   }
+const ServiceView = ({ service }) => {
   const navigate = useNavigate();
-  const [service, setService] = useState(null);
-  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    AOS.init({
-      duration: 1000,
-      once: true,
-    });
+    AOS.init({ duration: 1000, once: true });
   }, []);
-  useEffect(() => {
-    const fetchService = async () => {
-      try {
-        const res = await axiosInstance.get(`/services/${id}`);
-        setService(res.data);
-      } catch (error) {
-        console.error("Error fetching service:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
 
-    fetchService();
-  }, [id]);
-
-  if (loading) {
-    return (
-      <div
-        className="flex items-center justify-center py-20"
-        style={{ backgroundColor: "#f8fafc", minHeight: "100vh" }}
-      >
-        <div className="text-center">
-          <div className="w-16 h-16 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin mx-auto mb-4"></div>
-          <p style={{ color: "#64748b" }}>Loading service details...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (!service) {
-    return (
-      <div
-        className="flex items-center justify-center py-20"
-        style={{ backgroundColor: "#f8fafc", minHeight: "100vh" }}
-      >
-        <div className="text-center">
-          <div
-            className="w-24 h-24 mx-auto mb-6 rounded-full flex items-center justify-center"
-            style={{ backgroundColor: "#fee2e2" }}
-          >
-            <svg
-              className="w-12 h-12"
-              style={{ color: "#dc2626" }}
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"
-              />
-            </svg>
-          </div>
-          <p className="text-lg font-medium" style={{ color: "#dc2626" }}>
-            Service not found
-          </p>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div style={{ backgroundColor: "#f8fafc", minHeight: "100vh" }}>
@@ -325,5 +332,21 @@ const ServiceDetail = () => {
     </div>
   );
 };
+
+// export default ServiceDetail;
+
+const fetchServiceById = async (id) => {
+  const res = await axiosInstance.get(`/services/${id}`);
+  return res.data;
+};
+
+const ServiceDetail = () => (
+  <SlugPage
+    type="service"
+    fetchById={fetchServiceById}
+    getSlug={(s) => slugify(s.name)}
+    Render={({ entity }) => <ServiceView service={entity} />}
+  />
+);
 
 export default ServiceDetail;

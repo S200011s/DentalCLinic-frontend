@@ -136,7 +136,7 @@ const NavBar = () => {
                 </Link>
               </li>
               <li onClick={afterClicked}>
-                <Link to="/doctor" href="#" className="block py-2 pl-3 pr-4 ">
+                <Link to="/doctors" href="#" className="block py-2 pl-3 pr-4 ">
                   Doctors
                 </Link>
               </li>

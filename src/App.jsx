@@ -77,10 +77,21 @@ function App() {
         <Route path="/forgetpassword" element={<ForgetPassword />} />
         <Route path="/resetpassword/:token" element={<ResetPassword />} />
 
-        <Route path="/doctor" element={<DoctorList />} />
-        <Route path="/doctor/:id" element={<DoctorDetails />} />
+        <Route path="/doctors" element={<DoctorList />} />
+        {/* <Route path="/doctor/:id" element={<DoctorDetails />} /> */}
+       <Route path="/doctors/:slug" element={<DoctorDetails />} />
+
         <Route path="/services" element={<ServicesList />} />
-        <Route path="/services/:id" element={<ServicesDetails />} />
+        {/* <Route path="/services/:id" element={<ServicesDetails />} /> */}
+<Route path="/services/:slug" element={<ServicesDetails />} />
+
+
+{/* Legacy — old /doctor/<id> links redirect to new /doctors/<slug> */}
+<Route path="/doctor" element={<Navigate to="/doctors" replace />} />
+<Route path="/doctor/:id" element={<DoctorDetails />} />
+<Route path="/service/:id" element={<ServicesDetails />} />
+
+
 
         <Route element={<RoleProtectedRoute allowedRoles={["admin"]} />}>
           <Route path="/layout" element={<Layout />}>

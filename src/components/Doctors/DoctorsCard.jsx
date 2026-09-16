@@ -8,7 +8,7 @@ const DoctorCard = ({ doctor, size = "large", service, showBooking = false }) =>
   const specialization = doctor.specialization?.join(", ") || "General";
   
   const handleCardClick = () => {
-    navigate(`/doctor/${doctor._id}`);
+    navigate(`/doctors/${doctor._id}`);
   };
 
   const handleBooking = (e) => {
